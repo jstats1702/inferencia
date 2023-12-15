@@ -29,8 +29,7 @@ La **probabilidad** es un *proceso deductivo* (conclusión específica basándos
 knitr::include_graphics("01_probability_inference.jpg")
 ```
 
-
-## Ejemplo
+### Ejemplo {-}
 
 Sea $X$ una variable aleatoria con distribución Gamma con parámetro de forma $\alpha = 2$ y parámetro de razón $\beta = 3$, i.e., $X\sim\textsf{Gamma}(2,3)$. Calcular la probabilidad de que $X$ asuma un valor mayor que 1.
 
@@ -56,9 +55,6 @@ set.seed(123)
 x <- rgamma(n = 100000, shape = 2, rate = 3)
 round(mean(x > 1), 4)
 ```
-
-
-\
 
 
 # Tipos de inferencia
@@ -150,13 +146,17 @@ En la mayoría de situaciones prácticas **es imposible conocer con absoluta cer
 knitr::include_graphics("01_all_models_are_wrong.jpg")
 ```
 
-**(Definición).** Un **modelo paramétrico** $\mathcal{P}$ es un conjunto de distribuciones de probabilidad que se definen por medio de un *conjunto finito de parámetros*. Específicamente, un modelo paramétrico $\mathcal{P} = \{f(x;\boldsymbol{\theta}):\boldsymbol{\theta}\in\Theta\}$, donde $\boldsymbol{\theta}=(\theta_1,\ldots,\theta_k)$ es un parámetro desconocido que toma valores en el *espacio de parámetros* $\Theta$.
+
+**(Definición.)** Un **modelo paramétrico** $\mathcal{P}$ es un conjunto de distribuciones de probabilidad que se definen por medio de un *conjunto finito de parámetros*. Específicamente, un modelo paramétrico $\mathcal{P} = \{f(x;\boldsymbol{\theta}):\boldsymbol{\theta}\in\Theta\}$, donde $\boldsymbol{\theta}=(\theta_1,\ldots,\theta_k)$ es un parámetro desconocido que toma valores en el *espacio de parámetros* $\Theta$.
+
 
 La **población** corresponde a una *distribución de probabilidad* con parámetros fijos desconocidos definida en el espacio de resultados de todos los posibles variables que podría asumir la variable objeto de estudio.
 
-## Ejemplo
 
-- **Población**: variable de interés $X =$ "peso (en kg) de una persona que se somete a una terapia antiviral".
+### Ejemplo {-}
+
+Considere la variable aleatoria (población) $X =$ "peso (en kg) de una persona que se somete a una terapia antiviral". Entonces:
+
 - **Superpoblación**: personas similares a los pacientes examinados en todas las características fisiológicas relevantes para la terapia.
 - **Modelo**: $X\sim\textsf{Normal}(\mu,\sigma^2)$.
 - **Parámetro de interés**: $\boldsymbol{\theta} = (\mu,\sigma^2)$, media y varianza de $X$.
@@ -175,7 +175,7 @@ $$
 donde $\boldsymbol{X}=(X_1,\ldots,X_n)$ es un vector aleatorio $n$-dimensional y $f_X(x)$ es la función de densidad (masa) de probabilidad común a todas las variables aleatorias de la muestra aleatoria.
 
 
-## Ejemplo
+### Ejemplo {-}
 
 Sea $X_1,\ldots, X_5$ una muestra aleatoria de tamaño $n=5$ de una población $X$ con distribución Gamma con parámetro de forma $\alpha = 2$ y parámetro de razón $\beta = 3$. Simular una realización de la muestra aleatoria.
 
@@ -188,7 +188,7 @@ x <- rgamma(n = 5, shape = 2, rate = 3)
 round(x, 4)
 ```
 
-## Ejemplo
+### Ejemplo {-}
 
 Sea $X_1,\ldots, X_5$ una muestra aleatoria de tamaño $n=5$ de una población $X$ con distribución Gamma con parámetro de forma $\alpha = 2$ y parámetro de razón $\beta = 3$. Simular $N=100000$ de realizaciones de $X_1,\ldots, X_5$ y visualizar tanto la distribución empírica como la distribución teórica de cada variable de la muestra.
 
@@ -234,7 +234,7 @@ for (i in 1:n) {
 Los estadísticos son **variables aleatorias**. En efecto, si se seleccionan diferentes muestras de una población, entonces el valor de un estadístico cambia dependiendo de la muestra seleccionada.
 
 
-## Ejemplo
+### Ejemplo {-}
 
 Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$. Los siguientes son ejemplos de estadísticos:
 
@@ -250,14 +250,28 @@ $$
 $$
 T = \min\{X_1,\ldots,X_n\}\,.
 $$
-\
+
 
 **(Definición.)** Un estadístico cuyas realizaciones se utilizan para llevar a cabo estimaciones de los parámetros de un modelo se denomina **estimador**. Las realizaciones de un estimador se conocen como **estimaciones**.
 
 **(Definición.)** La distribución de probabilidad de un estadístico se llama **distribución muestral**.
 
 
-## Ejemplo 
+### Ejercicio {-}
+
+Demostrar que si $X_1,\ldots,X_n$ es una muestra aleatoria de tamaño $n$ de una población con media $\mu=\textsf{E}(X)$ y varianza $\sigma^2 = \textsf{Var}(X)$, entonces $\textsf{E}(\bar{X}) = \mu$ y $\textsf{Var}(\bar{X}) = \sigma^2/n$.
+
+La desviación estándar de la media muestral $\bar{X}$ es $\textsf{DE}(\bar{X}) = \sigma/\sqrt{n}$ y se conoce como **error estándar** de $\bar{X}$.
+
+La media muestral $\bar{X}$ es cada vez "mejor" como estimador de la media poblacional $\mu$ a medida que aumenta el tamaño de la muestra.
+
+
+### Ejercicio {-}
+
+Demostrar que si $X_1,\ldots,X_n$ es una muestra aleatoria de tamaño $n$ de una población con media $\mu=\textsf{E}(X)$ y varianza $\sigma^2 = \textsf{Var}(X)$, entonces $\textsf{E}(S^2) = \sigma^2$.
+
+
+### Ejemplo {-}
 
 Sea $X_1,\ldots, X_n$ una muestra aleatoria de tamaño $n$ de una población $X$ con distribución Gamma con parámetro de forma $\alpha = 2$ y parámetro de razón $\beta = 3$. Para cada $n\in\{5,10,20\}$, simular $N=100000$ de realizaciones de $X_1,\ldots, X_n$ y en cada instancia calcular la realización correspondiente de $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$. Visualizar la distribución empírica de cada $\bar{X}$.
 
