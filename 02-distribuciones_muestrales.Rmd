@@ -169,7 +169,7 @@ curve(expr = dnorm(x), n = 1000, col = "gray", lwd = 3, add = T)
 legend("topright", legend = c(paste0("v = ", 1:5), "Z"), col = c(1:5,"gray"), lwd = 2, bty = "n")
 ```
 
-La distribución Normal estándar proporciona una **"buena aproximación"** a la distribución $\textsf{t}$ para tamaños de muestra de mayores o iguales a 30.
+La distribución Normal estándar proporciona una **"buena aproximación"** (convergencia en distribución) a la distribución $\textsf{t}$ para tamaños de muestra de mayores o iguales a 30. La demostración se puede consultar en Hogg, McKean \& Craig (2018, p. 330).
 
 *(Teorema.)* Si $X_1,\ldots,X_n$ es una muestra aleatoria de una población con distribución Normal con media $\mu$ y varianza $\sigma^2$, entonces
 $$
@@ -230,9 +230,13 @@ donde $S_X$ y $S^2_Y$ son las medias muestrales de  $X_1,\ldots,X_n$ y $Y_1,\ldo
 # Referencias {-}
 
 ```{r, eval = TRUE, echo=FALSE, out.width="25%", fig.pos = 'H', fig.align = 'center'}
+knitr::include_graphics("mayorga.jpg")
+```
+
+```{r, eval = TRUE, echo=FALSE, out.width="25%", fig.pos = 'H', fig.align = 'center'}
 knitr::include_graphics("ramachandran_tsokos.png")
 ```
 
 ```{r, eval = TRUE, echo=FALSE, out.width="25%", fig.pos = 'H', fig.align = 'center'}
-knitr::include_graphics("mayorga.jpg")
+knitr::include_graphics("casella_berger.jpg")
 ```
