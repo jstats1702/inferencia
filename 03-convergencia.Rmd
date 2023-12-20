@@ -311,6 +311,26 @@ donde $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_n$ $Z\sim\textsf{Normal}(0,1)$.
 *Demostración:* Ver Mayorga (2008, pp. 29-30).
 
 
+### Ejemplo {-}
+
+Sea $X_1,\ldots, X_n$ una muestra aleatoria de tamaño $n$ de una población $X$ con distribución Exponencial con parámetro de razón $\lambda = 1$. Simular $N=100000$ de realizaciones de $X_1,\ldots, X_n$, para $n\in\{5,10,30,50,100,200\}$ y visualizar tanto la población como la distribución empírica del promedio muestral.
+
+```{r, fig.width=9, fig.height=6, fig.align='center'}
+# tamaños
+N <- 100000
+par(mfrow = c(2,3), mar = c(3,3,1.5,1.5), mgp = c(1.75,0.75,0))
+set.seed(123)
+for (n in c(5,10,30,50,100,200)) {
+  xb <- NULL
+  for (j in 1:N)
+    xb[j] <- mean(rexp(n = n, rate = 1))
+  hist(x = xb, freq = F, breaks = 25, col = "gray", border = "gray", xlim = c(0,3), ylim = c(0,6), xlab = "Promedio", ylab = "Densidad", main = "")
+  legend("topright", legend = paste0("n = ", n), bty = "n", cex = 1.5)
+  curve(expr = dexp(x, rate = 1), from = 0, to = 3, n = 1000, col = "royalblue", add = T)
+}
+```
+
+
 ### Ejercicio {-}
 
 Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias independientes tales que $X_i\sim\textsf{Bernoulli}(\pi)$, para $i=1,2,\ldots$. Demostrar que 
