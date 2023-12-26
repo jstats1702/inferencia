@@ -1,0 +1,543 @@
+---
+title: "Estimación puntual de parámetros"
+author: 
+- Juan Sosa PhD
+- Email   jcsosam@unal.edu.co
+- GitHub  https://github.com/jstats1702 
+date: ""
+output:
+  html_document:
+    highlight: default
+    number_sections: yes
+    theme: cosmo
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Introducción
+
+Se quiere desarrollar métodos que utilicen los **valores observados de la muestra aleatoria** para obtener **estimaciones** de los parámetros de la población.
+
+Se asume que la **distribución** de la población es **conocida**, pero los **parámetros** de la distribución son **desconocidos**.
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ cuya distribución está parametrizada en términos de la colección de parámetros $\boldsymbol{\theta} = (\theta_1,\ldots,\theta_k)$, con $\boldsymbol{\theta}\in\Theta\subset\mathbb{R}^k$. 
+
+La **estimación puntual** de parámetros consiste en asignar un **"valor apropiado"** a cada una de las componentes de $\boldsymbol{\theta}$, usando una **realización** de $X_1,\ldots,X_n$. 
+
+Esta tarea se lleva a cabo determinado la **"mejor"** colección de **estadísticos** $T_1,\ldots,T_k$ que funjan como **estimadores** de $\theta_1,\ldots,\theta_k$.
+
+Un **estadístico** $T=T(X_,\ldots,X_n)$ cuyo propósito es estimar un parámetro $\theta$ se denomina **estimador** de $\theta$, mientras que su **realización** $t=t(x_1,\ldots,x_n)$ es una **estimación** de $\theta$.
+
+Hay varios métodos disponibles:
+
+- Método de máxima verosimilitud.
+- Método de los momentos.
+- Método por analogía.
+
+
+# Método de máxima verosimilitud
+
+El **método de máxima verosimilitud** se quiere encontrar los valores de los parámetros que "probablemente" habrían generado los datos que se observaron bajo el modelo propuesto.
+
+El rendimiento de los **estimadores de máxima verosimilitud** (MLE, *maximum likelihood estimators*) es "óptimo" cuando el tamaño de la muestra crece.
+
+**(Definición.)** Sea $X$ una variable aleatoria con función de densidad $f_X(x;\boldsymbol{\theta})$. Se denomina **espacio del parámetros** al conjunto de todos los posibles valores que puede asumir $\boldsymbol{\theta}=(\theta_1,\ldots,\theta_k)$. Este conjunto se denota con $\Theta\subset\mathbb{R}^k$.
+
+### Ejemplo {-}
+
+- Si $X\sim\textsf{Bernoulli}(\theta)$,    entonces $\Theta = (0,1)\subset\mathbb{R}$.
+- Si $X\sim\textsf{Poisson}(\theta)$,      entonces $\Theta = \mathbb{R}^+\subset\mathbb{R}$.
+- Si $X\sim\textsf{Normal}(\mu,\sigma^2)$, entonces $\Theta = \mathbb{R}\times\mathbb{R}^+ \subset\mathbb{R}^2$.
+
+**(Definición.)** Sea $X_1,\ldots,X_n$ una colección de variables aleatorias (no necesariamente iid). Se denomina **función de verosimilitud** de $X_1,\ldots,X_n$ a la función 
+$$
+\text{c}\cdot f_{\boldsymbol{X}}(x_1,\ldots,x_n;\boldsymbol{\theta})\,,
+$$ 
+donde $\text{c}$ es una constante positiva y $f_{\boldsymbol{X}}(x_1,\ldots,x_n;\boldsymbol{\theta})$ es la función de densidad (masa) conjunta de $\boldsymbol{X}=(X_1,\ldots,X_n)$ parametrizada por medio de $\boldsymbol{\theta}\in\Theta\subset\mathbb{R}^k$.
+
+**(Definición.)** Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con función de densidad (masa) $f_X(x;\boldsymbol{\theta})$, con $\boldsymbol{\theta}\in\Theta\subset\mathbb{R}^k$. Se denominada **función de verosimilitud** de $\boldsymbol{\theta}$ a la función $L:\Theta\to[0,\infty)$ dada por
+$$
+L(\boldsymbol{\theta}) = L(\boldsymbol{\theta};x_1,\ldots,x_n) = \prod_{i=1}^n f_X(x_i;\boldsymbol{\theta})
+$$
+y **función de log-verosimilitud** a la función $\ell:\Theta\to (-\infty,\infty)$ dada por
+$$
+\ell(\boldsymbol{\theta}) = \log L(\boldsymbol{\theta}) = \sum_{i=1}^n \log f_X(x_i;\boldsymbol{\theta})\,.
+$$
+
+La **función de verosimilitud** es una función de $\boldsymbol{\theta}$, mas no de $x_1,\ldots,x_n$ (estos valores corresponden a la realización de la muestra aleatoria y son cantidades fijas). 
+
+La **función de verosimilitud** no integra a 1 sobre $\Theta$ necesariamente.
+
+
+### Ejermplo {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Bernoulli con parámetro $\theta$. Hallar la función de verosimilitud de $\theta$.
+
+En este caso se tiene que 
+$$
+L(\theta) = \prod_{i=1}^n f_X(x_i;\theta) = \prod_{i=1}^n \theta^{x_i}(1-\theta)^{1-x_i} = \theta^{\sum_{i=1}^n x_i}(1-\theta)^{n - \sum_{i=1}^n x_i}\quad\text{para}\,\,\theta\in(0,1)\,.
+$$
+
+### Ejemplo {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Poisson con parámetro $\theta$. Hallar la función de verosimilitud de $\theta$.
+
+En este caso se tiene que 
+$$
+L(\theta) = \prod_{i=1}^n f_X(x_i;\theta) = \prod_{i=1}^n \frac{e^{-\theta}\,\theta^{x_i}}{x_i!} = \frac{e^{-n\theta}\,\theta^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!} \quad\text{para}\,\,\theta\in(0,\infty)\,.
+$$
+
+### Ejemplo {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Normal con media $\mu$ y varianza $\sigma^2$. Hallar la función de verosimilitud de $(\mu,\sigma^2)$.
+
+En este caso se tiene que 
+$$
+\begin{align*}
+L(\mu,\sigma^2) &= \prod_{i=1}^n f_X(x_i;\mu,\sigma^2) \\
+&= \prod_{i=1}^n (2\pi\sigma^2)^{-1/2} \,\exp{\left(-\tfrac{1}{2\sigma^2}(x_i-\mu)^2\right)} \\
+&= (2\pi\sigma^2)^{-n/2} \,\exp{\left(-\tfrac{1}{2\sigma^2}\textstyle\sum_{i=1}^n(x_i-\mu)^2\right)}
+\end{align*}
+$$
+para $\mu\in(-\infty,\infty)$ y $\sigma^2\in(0,\infty)$.
+
+### Ejercicio {-}
+
+Demostrar que 
+$$
+\sum_{i=1}^n(x_i-\mu)^2 = n(\bar{x}-\mu)^2 + (n-1)s^2\,,
+$$
+donde $\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i$ y $s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i-\bar{x})^2$.
+
+**(Definición).** Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con función de densidad (masa) $f_X(x;\boldsymbol{\theta})$, con $\boldsymbol{\theta}\in\Theta\subset\mathbb{R}^k$. El **estimador de máxima verosimilitud** (MLE, *maximum likelihood estimator*) de $\boldsymbol{\theta}$, denotado con $\hat{\boldsymbol{\theta}}_{\text{MLE}}$, es aquel estadístico cuya realización maximiza la función de verosimilitud, esto es:
+$$
+\hat{\boldsymbol{\theta}}_{\text{MLE}} = \arg\max_{\boldsymbol{\theta}\in\Theta} L(\boldsymbol{\theta})\,.
+$$
+
+Maximizar la **función de verosimilitud** $L(\boldsymbol{\theta})$ es equivalente a maximizar la **función de log-verosimilitud**.
+
+Maximizar $\text{c}\cdot L(\boldsymbol{\theta})$ es equivalente a maximizar $L(\boldsymbol{\theta})$.
+
+
+### Ejemplo {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Bernoulli con parámetro $0 < \theta$ < 1. Hallar el MLE de $\theta$.
+
+En este caso se tiene que la función de log-verosimilitud es
+$$
+\ell(\theta) = s\log\theta + (n-s)\log(1-\theta)\,,
+$$
+donde $s = n\,\bar{x} = \sum_{i=1}^n x_i$. Así, derivando $\ell(\theta)$ respecto a $\theta$ e igualando a 0 se tiene que
+$$
+\frac{\text{d}}{\text{d}\theta}\ell(\theta) = \frac{s}{\theta}-\frac{n-s}{1-\theta} = 0\,,\quad\text{para}\,\,0<\theta<1\,.
+$$
+Despejando para $\theta$ se sigue que
+$$
+\frac{s}{\theta}=\frac{n-s}{1-\theta}
+\quad\Rightarrow\quad
+s - s\theta = n\theta - s\theta
+\quad\Rightarrow\quad
+\theta = \bar{x}\,.
+$$
+Por lo tanto, $\theta = \bar{x}$ es un punto crítico. Ahora, veamos que $\theta = \bar{x}$ corresponde a un máximo local. La segunda derivada de $\ell(\theta)$ es
+$$
+\frac{\text{d}^2}{\text{d}\theta^2}\ell(\theta) = - \frac{s}{\theta^2} - \frac{n-s}{(1-\theta)^2}
+\quad\Rightarrow\quad
+\frac{\text{d}^2}{\text{d}\theta^2}\ell(\theta) {\huge\vert}_{\theta = \bar{x}} = - \frac{n}{\bar{x}(1-\bar{x})} < 0\quad\because\,\,0 < \bar{x} < 1\,.
+$$
+De acuerdo con el criterio de la segunda derivada, se concluye que $\theta = \bar{x}$ es un máximo local. Finalmente se observa que en la frontera de $(0,1)$ no hay máximos locales ni globales dado que 
+$$
+\lim_{\theta\to 0^+} = -\infty
+\qquad\text{y}\qquad
+\lim_{\theta\to 1^-} = -\infty\,.
+$$
+Entonces, el MLE de $\theta$ es $\hat{\theta}_{\text{MLE}} = \bar{X}$.
+
+```{r}
+# datos sintéticos
+set.seed(123)
+x <- rbinom(n = 100, size = 1, prob = 0.35)
+s <- sum(x)
+n <- length(x)
+```
+
+
+```{r}
+# estimación puntual
+(xb <- mean(x))
+```
+
+```{r}
+# función de log-verosimilitud
+ll <- function(x, n, s) s*log(x) + (n - s)*log(1 - x)
+# función de verosimilitud
+lik <- function(x, n, s) exp(s*log(x) + (n - s)*log(1 - x))
+```
+
+
+```{r,fig.width=12,fig.height=12,fig.align='center'}
+# visualización
+par(mfrow = c(2,2), mar = c(3,3,1.5,1.5), mgp = c(1.75,0.75,0))
+# log-verosimilitud
+curve(expr = ll(x, n, s), n = 1000, col = 1, from = 0.0, to = 1.0, xlab = expression(theta), ylab = "Log-verosimilitud", main = "")
+abline(v = xb, h = ll(xb, n, s), col = 2, lty = 2)
+curve(expr = ll(x, n, s), n = 1000, col = 1, from = 0.1, to = 0.6, xlab = expression(theta), ylab = "Log-verosimilitud", main = "")
+abline(v = xb, h = ll(xb, n, s), col = 2, lty = 2)
+# verosimilitud
+curve(expr = lik(x, n, s), n = 1000, col = 1, from = 0.0, to = 1.0, xlab = expression(theta), ylab = "Log-verosimilitud", main = "")
+abline(v = xb, h = lik(xb, n, s), col = 2, lty = 2)
+curve(expr = lik(x, n, s), n = 1000, col = 1, from = 0.1, to = 0.6, xlab = expression(theta), ylab = "Log-verosimilitud", main = "")
+abline(v = xb, h = lik(xb, n, s), col = 2, lty = 2)
+```
+
+
+
+### Ejemplo {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Normal con media $-\infty < \mu < \infty$ y varianza $\sigma^2 > 0$. Hallar el MLE de $(\mu,\sigma^2)$.
+
+En este caso se tiene que la función de log-verosimilitud es
+$$
+\ell(\mu,\sigma^2) = -\frac{n}{2}\log(2\pi) -\frac{n}{2}\log(\sigma^2) -\frac{1}{2\sigma^2}\left(n(\bar{x}-\mu)^2 + (n-1)s^2\right)\,,
+$$
+donde $\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i$ y $s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i-\bar{x})^2$. Así, derivando parcialmente $\ell(\mu,\sigma^2)$ respecto a $\mu$ y $\sigma^2$ e igualando a 0 se tiene que
+$$
+\frac{\partial}{\partial\mu}\ell(\mu,\sigma^2) = \frac{n}{\sigma^2}(\bar{x} - \mu) = 0
+\qquad\text{y}\qquad
+\frac{\partial}{\partial\sigma^2}\ell(\mu,\sigma^2) = -\frac{n}{2\sigma^2} + \frac{1}{2(\sigma^2)^2}\left(n(\bar{x}-\mu)^2 + (n-1)s^2\right) = 0\,,
+$$
+para $-\infty < \mu < \infty$ y $\sigma^2 > 0$. Despejando para $\mu$ y $\sigma^2$ se sigue que
+$$
+\frac{n}{\sigma^2}(\bar{x} - \mu) = 0
+\quad\Rightarrow\quad
+\mu = \bar{x}
+$$
+y
+$$
+\frac{1}{2(\sigma^2)^2}   \left(n(\bar{x}-\bar{x})^2 + (n-1)s^2\right) = \frac{n}{2\sigma^2}
+\quad\Rightarrow\quad
+\frac{1}{\sigma^2}\,(n-1)s^2 = n
+\quad\Rightarrow\quad
+\sigma^2 = \tfrac{(n-1)}{n}s^2 = \tilde{s}^{2}\,.
+$$
+Por lo tanto, $(\mu,\sigma^2) = (\bar{x},\tilde{s}^2)$ es un punto crítico. Ahora, veamos que $(\mu,\sigma^2) = (\bar{x},\tilde{s}^2)$  corresponde a un máximo local. La matriz Hessiana de $\ell(\mu,\sigma^2)$ es
+$$
+\mathbf{H} = 
+\begin{bmatrix}
+\frac{\partial^2\ell}{\partial\mu^2} & \frac{\partial^2\ell}{\partial\mu\partial\sigma^2} \\
+\frac{\partial^2\ell}{\partial\sigma^2\partial\mu\ell} & \frac{\partial^2\ell}{\partial(\sigma^2)^2} 
+\end{bmatrix}
+=
+\begin{bmatrix}
+-\frac{n}{\sigma^2} & -\frac{n}{(\sigma^2)^2}(\bar{x} - \mu) \\
+-\frac{n}{(\sigma^2)^2}(\bar{x} - \mu) &  \frac{n}{2(\sigma^2)^2} - \frac{1}{(\sigma^2)^3}\left(n(\bar{x}-\mu)^2 + (n-1)s^2\right)
+\end{bmatrix}
+$$
+y al evaluarse en $(\mu,\sigma^2) = (\bar{x},\tilde{s}^2)$ da como resultado
+$$
+\mathbf{H}(\bar{x},\tilde{s}^2) =
+\begin{bmatrix}
+-\frac{n}{\tilde{s}^2} & 0 \\
+0 &  -\frac{n}{2(\tilde{s}^2)^2}
+\end{bmatrix}
+\quad\Rightarrow\quad
+[\mathbf{H}(\bar{x},\tilde{s}^2)]_{1,1} = -\frac{n}{\tilde{s}^2} < 0
+\quad\text{y}\quad
+\det\mathbf{H}(\bar{x},\tilde{s}^2) = \frac{n^2}{2(\tilde{s}^2)^3} > 0
+\quad\because\,\,\tilde{s}^2 > 0\,.
+$$
+De acuerdo con el criterio de la segunda derivada, se concluye que $(\mu,\sigma^2) = (\bar{x},\tilde{s}^2)$ es un máximo local. Finalmente se observa que en la frontera $\{(\mu,\sigma^2):-\infty<\mu<\infty\,,\,\sigma^2=0\}$ no hay máximos locales ni globales dado que 
+$$
+\lim_{\sigma^2\to 0^+} \left( -\frac{n}{2}\log(2\pi) -\frac{n}{2}\log(\sigma^2) -\frac{1}{2\sigma^2}\left(n(\bar{x}-\mu)^2 + (n-1)s^2\right) \right) = -\infty
+$$
+Entonces, los MLE de $\mu$ y $\sigma^2$ son $\hat{\mu}_{\text{MLE}} = \bar{X}$ y $\hat{\sigma^2}_{\text{MLE}} =\tfrac{n-1}{n} S^2$, respectivamente.
+
+```{r}
+# datos sintéticos
+set.seed(123)
+x <- rnorm(n = 100, mean = 0, sd = 1)
+n <- length(x)
+```
+
+
+```{r}
+# estimación puntual
+(xb <- mean(x))
+(s2 <- var(x))
+```
+
+```{r}
+# función de log-verosimilitud
+ll <- function(mu, sig2, n, xb, s2) -0.5*n*log(2*pi) - 0.5*n*log(sig2) - 0.5*(n*(xb - mu)^2 + (n-1)*s2)/sig2
+```
+
+
+```{r}
+# rango de valores
+g <- 50
+grid_mu   <- seq(from = xb - 0.3, to = xb + 0.3, length = g)
+grid_sig2 <- seq(from = s2 - 0.3, to = s2 + 0.3, length = g)
+# evaluar y almacenar
+LL <- matrix(data = NA, nrow = g, ncol = g)
+for(i in 1:g) 
+  for(j in 1:g)
+    LL[i,j] <- ll(mu = grid_mu[i], sig2 = grid_sig2[j], n, xb, s2)
+```
+
+
+```{r, fig.width=12, fig.height=6, fig.align='center'}
+# visualización
+par(mfrow = c(1,2), mar = c(3,3,1,1), mgp = c(1.75,0.75,0))
+# log-verosimilitud
+persp(x = grid_mu, y = grid_sig2, z = LL, theta = 30, phi = 30, expand = 1, cex.axis = 0.75, col = "gray95", ticktype = "detailed", xlab = "Media", ylab = "Varianza", zlab = "", main = "Log-verosimilitud")
+# verosimilitud
+persp(x = grid_mu, y = grid_sig2, z = exp(LL), theta = 30, phi = 30, expand = 1, cex.axis = 0.75, col = "gray95", ticktype = "detailed", xlab = "Media", ylab = "Varianza", zlab = "", main = "Verosimilitud")
+```
+
+```{r}
+# visualización
+suppressMessages(suppressWarnings(library(plotly)))
+fig <- plot_ly(x = grid_mu, y = grid_sig2, z = LL) %>% add_surface()
+fig
+```
+
+
+### Ejemplo {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Gamma con parámetro de forma $\alpha>0$ y parámetro de razón $\beta>0$. Hallar el MLE de $(\alpha,\beta)$.
+
+En este caso se tiene que la función de log-verosimilitud es
+$$
+\ell(\alpha,\beta) =  n\,\alpha\log\beta\, - n\log\Gamma(\alpha) + (\alpha-1)\sum_{i=1}^n\log x_i - \beta\sum_{i=1}^n x_i\,,
+$$
+donde $\Gamma(\alpha) = \int_0^\infty u^{\alpha-1}e^{-u}\,\text{d}u$ es la función Gamma. Así, derivando parcialmente $\ell(\alpha,\beta)$ respecto a $\alpha$ y $\sigma^2$ e igualando a 0 se tiene que
+$$
+\frac{\partial}{\partial\alpha}\ell(\alpha,\beta) = n\log\beta -n\,\psi(\alpha) + n\,\overline{\log x} = 0
+\qquad\text{y}\qquad
+\frac{\partial}{\partial\beta}\ell(\alpha,\beta) = \frac{n\,\alpha}{\beta} - n\,\bar{x} = 0\,,
+$$
+donde $\psi(\alpha) = \frac{\text{d}}{\text{d}\alpha}\Gamma(\alpha) = \frac{\Gamma'(\alpha)}{\Gamma(\alpha)}$ es la función Digamma, $\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i$ y $\overline{\log x} = \frac{1}{n}\sum_{i=1}^n\log x_i$, para $ \alpha > infty$ y $\beta > 0$. Despejando para $\beta$ de la segunda ecuación se tiene que
+$$
+\frac{n\,\alpha}{\beta} - n\,\bar{x} = 0
+\quad\Rightarrow\quad
+\beta = \frac{\alpha}{\bar{x}}\,.
+$$
+Sustituyendo este valor de $\beta$ en la primera ecuación y despejando para $\alpha$ se sigue que 
+$$
+n\log\frac{\alpha}{\bar{x}} -n\,\psi(\alpha) + n\,\overline{\log x} = 0
+\quad\Rightarrow\quad
+\log\alpha - \,\psi(\alpha) + \,\overline{\log x} - \log\bar{x} = 0
+$$
+No existe una solución cerrada para $\alpha$ y $\beta$. En este caso, se pueden usar métodos numéricos para resolver la segunda ecuación para $\alpha$ y luego usar este valor para encontrar $\beta$.
+
+
+```{r}
+# datos sintéticos
+set.seed(123)
+x <- rgamma(n = 100, shape = 2, rate = 3)
+n <- length(x)
+```
+
+
+```{r}
+# estadísticos
+(xb <- mean(x))
+(lb <- mean(log(x)))
+```
+
+```{r}
+# estimación puntual
+# 'ver la ayuda de uniroot'
+suppressMessages(suppressWarnings(library(rootSolve)))
+k <- lb - log(xb)
+g <- function(x, k) log(x) - digamma(x) + k
+(alpha_mle <- uniroot(f = g, lower = 1, upper = 3, k = k)$root)
+(beta_mle   <- alpha_mle/xb )
+```
+
+```{r, fig.align='center'}
+# visualización
+par(mfrow = c(1,1), mar = c(3,3,1.5,1.5), mgp = c(1.75,0.75,0))
+curve(expr = g(x, k), from = 1, to = 3, n = 100, xlab = "x", ylab = "g(x)", main = "")
+abline(h = 0, col = "gray" ,lwd = 2)
+abline(v = alpha_mle, col = 2, lty = 2)
+```
+
+
+```{r}
+# función de log-verosimilitud
+ll <- function(alpha, beta, n, xb, lb) n*alpha*log(beta) - n*lgamma(alpha) + n*(alpha - 1)*lb - n*beta*xb
+```
+
+
+```{r}
+# otra manera optimizando menos la función de log-verosimilitud 
+mll  <- function(x) -ll(alpha = x[1], beta = x[2], n, xb, lb)
+temp <- optim(par = c(1, 1), fn = mll, hessian = TRUE)
+temp$par[1]  # alpha_mle
+temp$par[2]  # beta_mle 
+temp$hessian  # matriz Hessiana
+```
+
+
+```{r}
+# rango de valores
+g <- 100
+grid_alpha <- seq(from = 1.5, to = 3.0, length = g)
+grid_beta  <- seq(from = 2, to = 6, length = g)
+# evaluar y almacenar
+LL <- matrix(data = NA, nrow = g, ncol = g)
+for(i in 1:g) 
+  for(j in 1:g)
+    LL[i,j] <- ll(alpha = grid_alpha[i], beta = grid_beta[j], n, xb, lb)
+```
+
+
+```{r, fig.align='center'}
+# visualización
+par(mfrow = c(1,2), mar = c(3,3,1.5,1.5), mgp = c(1.75,0.75,0))
+filled.contour(x = grid_alpha, y = grid_beta, z = exp(LL), xlab = expression(alpha), ylab = expression(beta), color.palette = terrain.colors, main = "Verosimilitud")
+```
+
+
+### Ejemplo {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución uniforme en el intervalo $(0,\theta]$, con $\theta > 0$. Hallar el MLE de $\theta$.
+
+En este caso se tiene que la función de densidad de la población $X$ está dada por
+$$
+f_X(x;\theta) = \frac{1}{\theta}\,I_{(0,\theta]}(x)\,,
+$$
+donde $I_A$ es la función indicadora del conjunto $A$, y por lo tanto, la función de verosimilitud de $\theta$ es
+$$
+L(\theta) = \prod_{i=1}^n \frac{1}{\theta}\,I_{(0,\theta]}(x_i) =  \frac{1}{\theta^n}\prod_{i=1}^n I_{(0,\theta]}(x_i)\,.
+$$
+Si $\theta < x_i$ para algún $i$, entonces $I_{(0,\theta]}(x_i) = 0$, y en consecuencia, $L(\theta) = 0$. Además, $L(\theta) > 0$ siempre que $x_i \leq \theta$ para todo $i = 1,\ldots,n$, o equivalentemente, $x_{(n)} \leq \theta$, donde $x_{(n)} = \max\{x_1,\ldots,x_n\}$. Por lo tanto,
+$$
+L(\theta) = \frac{1}{\theta^n} I_{[x_{(n)},\infty)}(\theta)\,.
+$$
+Como la función $g(\theta) = 1/\theta^n$ es una función estrictamente decreciente de $\theta$, para todo $n \geq 1$, se concluye que 
+$$
+\hat{\theta}_{\text{MLE}} = X_{(n)} = \max\{X_1,\ldots,X_n\}\,.
+$$
+
+
+### Ejercicio {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Poisson con parámetro $\theta$. Hallar el MLE de $\theta$.
+
+
+### Ejercicio {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Exponencial con parámetro de razón $\theta$. Hallar el MLE de $\theta$.
+
+
+**(Teorema: Principio de invarianza de los MLE.)** Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con función de densidad (masa) $f_X(x;\boldsymbol{\theta})$, con $\boldsymbol{\theta}\in\Theta\subset\mathbb{R}^k$. Si $\hat{\boldsymbol{\theta}}_{\text{MLE}}$ es el MLE de $\boldsymbol{\theta}$ y $\boldsymbol{\xi} = g(\boldsymbol{\theta})$ es una función uno a uno (inyectiva) de $\boldsymbol{\theta}$, entonces
+$$
+\hat{\boldsymbol{\xi}}_{\text{MLE}} = g(\hat{\boldsymbol{\theta}}_{\text{MLE}})\,.
+$$
+
+*Demostración:*
+
+Sea $h=g^{-1}$ la función inversa de $g$. Así, se tiene que
+$$
+L(\boldsymbol{\theta}) = \prod_{i=1}^n f_X\left(x_i;\boldsymbol{\theta}\right) = \prod_{i=1}^n f_X\left(x_i;h(\boldsymbol{\xi})\right)
+= L(\boldsymbol{\xi})\,,
+$$
+para todo $\boldsymbol{\theta}\in\Theta$ y para todo $\boldsymbol{\xi}\in\Xi=\{\boldsymbol{\xi}:\boldsymbol{\xi}=g(\boldsymbol{\theta})\,,\,\boldsymbol{\theta}\in\Theta\}$. Por lo tanto, $\max L(\boldsymbol{\xi}) = L(\hat{\boldsymbol{\theta}}_{\text{MLE}})$. Así, el valor de $\boldsymbol{\xi}\in\Xi$ que maximiza $L(\boldsymbol{\xi})$ es aquel valor de $\boldsymbol{\xi}$ tal que $h(\boldsymbol{\xi}) = \hat{\boldsymbol{\theta}}_{\text{MLE}}$. Por lo tanto, $\hat{\boldsymbol{\xi}}_{\text{MLE}} = g(\hat{\boldsymbol{\theta}}_{\text{MLE}})$.
+
+
+### Ejercicio {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Normal con media $-\infty < \mu < \infty$ y varianza $\sigma^2 > 0$. Hallar el MLE de $\sigma$.
+
+
+# Método de los momentos
+
+**(Definición.)** Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con función de densidad (masa) $f_X(x;\boldsymbol{\theta})$, con $\boldsymbol{\theta}\in\Theta\subset\mathbb{R}^k$. El **estimador del método de los momentos** (MOM, *method of moments estimator*) de $\boldsymbol{\theta}$, denotado con $\hat{\boldsymbol{\theta}}_{\text{MOM}}$, es aquel estadístico que corresponde a la solución del sistema de ecuaciones 
+$$
+\mu'_j = M'_j
+\qquad\text{para}\,\,j = 1,\ldots,k\,,
+$$
+donde 
+$$
+\mu'_j = \textsf{E}(X^j)
+\qquad\text{y}\qquad
+M'_j = \frac{1}{n}\sum_{i=1}^n X_i^j
+$$
+son los $j$-ésimos momentos poblacionales y muestrales, respectivamente.
+
+**(Definición.)** Sea $\hat{\boldsymbol{\theta}}_{\text{MOM}}$ el MOM de $\boldsymbol{\theta}$ y $g(\boldsymbol{\theta})$ una función uno a uno (inyectiva) de $\boldsymbol{\theta}$. Se denomina **estimador del método de los momentos generalizado** (GMOM, *generalized method of moments estimator*) de $g(\boldsymbol{\theta})$ al estimador $g(\hat{\boldsymbol{\theta}}_{\text{MOM}})$.
+
+
+### Ejemplo {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Bernoulli con parámetro $0 < \theta$ < 1. Hallar el MOM de $\theta$.
+
+Igualando el primer momento poblacional con su análogo muestral y despejando para $\theta$, se tiene que
+$$
+\textsf{E}(X) = \frac{1}{n}\sum_{i=1}^n X_i
+\quad\Rightarrow\quad
+\theta = \frac{1}{n}\sum_{i=1}^n X_i\,.
+$$
+Por lo tanto, el MOM de $\theta$ es $\hat{\theta}_{\text{MOM}} = \bar{X}$.
+
+
+### Ejemplo {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Normal con media $-\infty < \mu < \infty$ y varianza $\sigma^2 > 0$. Hallar el MOM de $(\mu,\sigma^2)$.
+
+Igualando el los primeros dos momentos poblacionales con sus análogos muestrales y despejando simultáneamente para $\mu$ y $\sigma^2$, se tiene que
+$$
+\textsf{E}(X) = \frac{1}{n}\sum_{i=1}^n X_i\quad\text{y}\quad\textsf{E}(X^2) = \frac{1}{n}\sum_{i=1}^n X_i^2
+\quad\Rightarrow\quad
+\mu = \frac{1}{n}\sum_{i=1}^n X_i\quad\text{y}\quad\sigma^2 + \mu^2 = \frac{1}{n}\sum_{i=1}^n X_i^2\,.
+$$
+Por lo tanto, los MOM de $\mu$ y $\sigma^2$ son
+$$
+\hat{\mu}_{\text{MOM}} = \bar{X}
+\quad\text{y}\quad
+\hat{\sigma^2}_{\text{MOM}} = \frac{1}{n}\sum_{i=1}^n (X_i-\bar{X})^2\,.
+$$
+
+### Ejercicio {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Gamma con parámetro de forma $\alpha>0$ y parámetro de razón $\beta>0$. Hallar el MOM de $(\alpha,\beta)$.
+
+
+### Ejercicio {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Uniforme sobre el intervalo $(\alpha,\beta)$, con $-\infty < \alpha < \beta < \infty$. el MOM de $(\alpha,\beta)$.
+
+
+### Ejercicio {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Poisson con parámetro $\theta$. Hallar el MOM de $\theta$.
+
+
+### Ejercicio {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Exponencial con parámetro de razón $\theta$. Hallar el MOM de $\theta$.
+
+
+### Ejercicio {-}
+
+Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Normal con media $-\infty < \mu < \infty$ y varianza $\sigma^2 > 0$. Hallar el GMOM de $\sigma$.
+
+
+# Referencias {-}
+
+```{r, eval = TRUE, echo=FALSE, out.width="25%", fig.pos = 'H', fig.align = 'center'}
+knitr::include_graphics("mayorga.jpg")
+```
+
+```{r, eval = TRUE, echo=FALSE, out.width="25%", fig.pos = 'H', fig.align = 'center'}
+knitr::include_graphics("ramachandran_tsokos.png")
+```
+
+```{r, eval = TRUE, echo=FALSE, out.width="25%", fig.pos = 'H', fig.align = 'center'}
+knitr::include_graphics("casella_berger.jpg")
+```
