@@ -96,7 +96,7 @@ donde $Z_i = (X_i-\mu)/\sigma$, para $i=1,\ldots,n$.
 
 **(Teorema.)** Si $X_1,\ldots,X_n$ es una muestra aleatoria de una población con distribución Normal con media $\mu$ y varianza $\sigma^2$, entonces $\bar{X}$ y $S^2$ son independientes.
 
-*Demostración:* Ver Mayorga (2008, pp. 32-33).
+*Demostración:* Ver Mayorga (2004, pp. 32-33).
 
 **(Teorema.)** Si $X_1,\ldots,X_n$ es una muestra aleatoria de una población con distribución Normal con media $\mu$ y varianza $\sigma^2$, entonces
 $$
