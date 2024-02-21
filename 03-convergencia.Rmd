@@ -76,7 +76,7 @@ $$
 **(Definición.)** Se dice que la sucesión de variables aleatorias $X_1,X_2,\ldots$ **converge en probabilidad a la variable aleatoria $X$** si para todo $\epsilon > 0$ se tiene que
 
 $$
-\lim_{n\to\infty} \textsf{P}\left( |X_n - X| < \epsilon \right) = 0
+\lim_{n\to\infty} \textsf{P}\left( |X_n - X| < \epsilon \right) = 1
 \qquad\equiv\qquad
 \textsf{P}\left( |X_n - X| < \epsilon \right) \to 1\quad\text{cuando}\,\,n\to\infty\,.
 $$
@@ -193,16 +193,7 @@ de donde $X_n\xrightarrow{L_r} 0$.
 
 ### Ejercicio {-}
 
-Sea $X_1,_2,\ldots$ una sucesión de variables aleatorias tales que , para $n=1,2,\ldots$. 
-$$
-X_n = 
-\begin{cases}
-  n^2 & \text{con probabilidad}\,\,\tfrac{1}{n}\,; \\
-  0   & \text{con probabilidad}\,\,1-\tfrac{1}{n}\,.\\
-\end{cases}
-$$
-Demostrar que $X_n\xrightarrow{\text{p}} X$, pero $X_n\not\xrightarrow{L_r}X$ para ningún $r\geq 1$. 
-
+Establecer una sucesión de variables aleatorias tales que $X_n\xrightarrow{\text{p}} X$, pero $X_n\not\xrightarrow{L_r}X$ para ningún $r\geq 1$. 
 
 # Convergencia en distribución
 
@@ -255,7 +246,7 @@ legend("bottomright", legend = c("Exp(1)",expression(X[n])), col = c("blue","bla
 
 ### Ejemplo {-}
 
-A continuación se ilustra visualmente que $t_n\xrightarrow{\text{d}} Z$ por medio de las funciones de distribución acumulada. Una demostración se puede consultar en Hogg, McKean \& Craig (2018, p. 330):
+A continuación se ilustra visualmente que $t_n\xrightarrow{\text{d}} Z$ por medio de las funciones de distribución acumulada. 
 
 ```{r, fig.align='center'}
 # visualización
@@ -308,7 +299,7 @@ $$
 $$
 donde $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_n$ $Z\sim\textsf{Normal}(0,1)$.
 
-*Demostración:* Ver Mayorga (2008, pp. 29-30).
+*Demostración:* Ver Mayorga (2004, pp. 29-30).
 
 
 ### Ejemplo {-}
