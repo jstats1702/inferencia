@@ -162,7 +162,7 @@ $$
 
 # Convergencia en media 
 
-**(Definición.)** Se dice que la sucesión de variables aleatorias $X_!,X_2,\ldots$ **converge en media $r$-ésima ($r\geq 1$) a la variable aleatoria $X$** si
+**(Definición.)** Se dice que la sucesión de variables aleatorias $X_1,X_2,\ldots$ **converge en media $r$-ésima ($r\geq 1$) a la variable aleatoria $X$** si
 $$
 \lim_{n\to\infty} \textsf{E}\left(|X_n - X|^r\right) = 0\,.
 $$
