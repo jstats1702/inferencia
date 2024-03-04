@@ -293,7 +293,7 @@ Finalmente, se observa que $F_{X_n}(0)=0.5$, para $n=1,2,\ldots$, mientras que $
 
 Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias tales que $X_n = -X$, para $n=1,2,\ldots$, donde $X\sim\textsf{Normal}(0,1)$. Demostrar que $X_n\xrightarrow{\text{d}} X$, pero $X_n\not\xrightarrow{\text{p}}X$. 
 
-**(Teorema de Lindeberg-Lévy: Teorema del Límite Central.)** Sean $X_1,X_2,\ldots$ es una sucesión de variables aleatorias con media $\mu$ y varianza $\sigma^2$ finitas. Entonces,
+**(Teorema de Lindeberg-Lévy: Teorema del Límite Central.)** Sean $X_1,X_2,\ldots, X_n$ es una muestra aleatoria de una población con media $\mu$ y varianza $\sigma^2$ finitas. Entonces,
 $$
 \sqrt{n}\,\frac{\bar{X}_n - \mu}{\sigma} \xrightarrow{\text{d}} Z\,,
 $$
