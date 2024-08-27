@@ -8,3 +8,5 @@ Materiales del curso de Análisis Estadístico de Redes Sociales ofreciendo en e
 2. Distribuciones muestrales asociadas con la Normal.
 3. Convergencia de variables aleatorias.
 4. Estimación puntual de parámetros.
+5. Intervalos de confianza.
+6. Pruebas de hipótesis: Introducción.
