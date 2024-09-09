@@ -10,3 +10,4 @@ Materiales del curso de Análisis Estadístico de Redes Sociales ofreciendo en e
 4. Estimación puntual de parámetros.
 5. Intervalos de confianza.
 6. Pruebas de hipótesis: Introducción.
+7. Pruebas de Hipótesis para una Población Bajo Normalidad.
