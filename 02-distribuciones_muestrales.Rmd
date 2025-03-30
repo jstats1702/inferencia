@@ -7,21 +7,23 @@ author:
 date: ""
 output:
   html_document:
-    highlight: default
-    number_sections: yes
-    theme: cosmo
+    toc: true
+    toc_float: true
+    theme: cerulean
+    highlight: kate
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
 # Introducción
 
 La distribución muestral de un estadístico depende de la distribución poblacional de la que se toma la muestra aleatoria. 
 
 A continuación se estudian algunos estadísticos que se basan en una muestra aleatoria extraída de una distribución Normal.
+
+---
 
 **(Teorema.)** Si $X_1,\ldots,X_n$ es una colección de variables aleatorias independientes tales que $X_i\sim\textsf{Normal}(\mu_i,\sigma^2_i)$, para $i=1,\ldots,n$, y $a_1,\ldots, a_n$ es una colección de números reales, entones $\sum_{i=1}^n a_i X_i$ tiene distribución Normal con media $\sum_{i=1}^n a_i\mu_i$ y varianza $\sum_{i=1}^n a_i^2\sigma^2_i$.
 
@@ -41,6 +43,8 @@ m_Y(t) &= \textsf{E}\left(\exp{\left[t\,Y\right]}\right)
 $$
 lo que corresponde a la fgm de una variable aleatoria con distribución Normal con media $\mu_Y = \sum_{i=1}^n a_i \mu_i$ y varianza $\sigma_Y\sum_{i=1}^n a_i^2\sigma^2_i$. Por lo tanto, $Y\sim\textsf{Normal}(\mu_Y, \sigma^2_Y)$. 
 
+---
+
 **(Corolario.)** Si $X_1,\ldots,X_n$ es una muestra aleatoria de una población con distribución Normal con media $\mu$ y varianza $\sigma^2$, entonces $\bar{X}\sim\textsf{Normal}(\mu,\sigma^2/n)$, y por lo tanto, 
 $$
 \frac{\bar{X} - \mu}{\sigma/\sqrt{n}}\sim\textsf{Normal}(0,1)\,.
@@ -48,28 +52,42 @@ $$
 
 *Demostración:* Ejercicio.
 
+---
 
 # Distribución Chi-cuadrado
 
 La distribución **Chi-cuadrado** con $\nu$ grados de libertad es un caso particular de la **distribución Gamma** con parámetro de forma $\alpha = \nu/2$ y parámetro de razón $\beta = 1/2$, i.e., $\chi^2_n\equiv \text{Gamma}(n/2,1/2)$.
+
+---
 
 ### Ejemplo {-}
 
 Visualizar la función de densidad de probabilidad de una variable aleatoria con distribución $\chi^2_\nu$, para $\nu \in\{1,2,3,4,5\}$.
 
 ```{r, fig.align='center'}
-# visualización
-par(mar = c(3,3,1.5,1.5), mgp = c(1.75,0.75,0))
-curve(expr = dchisq(x, df = 1), n = 1000, col = 1, from = 0, to = 15, ylim = c(0,0.5), xlab = "x", ylab = "f(x)", main = "Distribución Chi-cuadrado")
-for (nu in 2:5)
-  curve(expr = dchisq(x, df = nu), n = 1000, col = nu, add = T)
-legend("topright", legend = paste0("v = ", 1:5), col = 1:5, lwd = 2, bty = "n")
+# Configuración de la visualización
+par(mar = c(3, 3, 1.5, 1.5), mgp = c(1.75, 0.75, 0))
+
+# Graficar la distribución Chi-cuadrado para v = 1
+curve(dchisq(x, df = 1), from = 0, to = 15, n = 1000, col = 1, ylim = c(0, 0.5),
+      xlab = "x", ylab = "f(x)", main = "Distribución Chi-cuadrado", lwd = 2)
+
+# Agregar curvas para v = 2, ..., 5
+for (nu in 2:5) {
+  curve(dchisq(x, df = nu), from = 0, to = 15, n = 1000, col = nu, add = TRUE, lwd = 2)
+}
+
+# Agregar la leyenda
+legend("topright", legend = paste0("ν = ", 1:5), col = 1:5, lwd = 2, bty = "n")
 ```
 
+---
 
 **(Teorema.)** Si $X_1,\ldots,X_n$ es una colección de variables aleatorias independientes tales que $X_i\sim\chi^2_{\nu_i}$, para $i=1,\ldots,n$, entonces $\sum_{i=1}^n X_i$ tiene distribución Chi-cuadrado con $\sum_{i=1}^n \nu_i$ grados de libertad.
 
 *Demostración:* Ejercicio. 
+
+---
 
 **(Teorema.)** Si $X\sim\textsf{Normal}(0,1)$, entonces $X^2\sim\chi^2_1$.
 
@@ -86,6 +104,8 @@ m_Y(t) &= \textsf{E}\left(\exp{\left[t\,Y\right]}\right) = \textsf{E}\left(\exp{
 $$
 lo que corresponde a la fgm de una variable aleatoria con distribución Chi-cuadrado con 1 grado de libertad. Por lo tanto, $Y\sim\chi^2_1$.
 
+---
+
 **(Teorema.)** Si $X_1,\ldots,X_n$ es una muestra aleatoria de una población con distribución Normal con media $\mu$ y varianza $\sigma^2$, entonces
 $$
 \sum_{i=1}^n Z_i^2\sim\chi^2_n\,,
@@ -94,9 +114,15 @@ donde $Z_i = (X_i-\mu)/\sigma$, para $i=1,\ldots,n$.
 
 *Demostración:* Ejercicio. 
 
+---
+
 **(Teorema.)** Si $X_1,\ldots,X_n$ es una muestra aleatoria de una población con distribución Normal con media $\mu$ y varianza $\sigma^2$, entonces $\bar{X}$ y $S^2$ son independientes.
 
-*Demostración:* Ver Mayorga (2004, pp. 32-33).
+*Demostración:* Ejercicio. 
+
+Sugerencia: Halle la distribución conjunta $f(X_1,\ldots,X_n)$ y muestre que $f(X_1,\ldots,X_n) = f(\bar{X},Z_1,\ldots,Z_n)$, donde $Z_i = X_i - \bar{X}$, para $i=1,\ldots,n$.
+
+---
 
 **(Teorema.)** Si $X_1,\ldots,X_n$ es una muestra aleatoria de una población con distribución Normal con media $\mu$ y varianza $\sigma^2$, entonces
 $$
@@ -135,10 +161,11 @@ m_Y(t) = (1-2t)^{-(n-1)/2}\,,
 $$
 lo que corresponde a la fgm de una variable aleatoria con distribución Chi-cuadrado con $n-1$ grado de libertad, ,i.e., $T\sim\textsf{t}_n$ . Por lo tanto, $Y\sim\chi^2_{n-1}$.
 
+---
 
 # Distribución $\textsf{t}$
 
-**(Definición.)** Si $Z$ y $Y$ son variables aleatorias independientes tales que $Z\sim\textsf{Normal}(0,1)$ y $V\sim\chi^2_n$, entonces se dice que la variable aleatoria
+**(Definición.)** Si $Z$ y $V$ son variables aleatorias independientes tales que $Z\sim\textsf{Normal}(0,1)$ y $V\sim\chi^2_n$, entonces se dice que la variable aleatoria
 $$
 T = \frac{Z}{\sqrt{V/n}}
 $$
@@ -154,24 +181,41 @@ e^x= \lim_{n\to\infty} \left(1 + \frac{x}{n}\right)^{n}
 e^x = \sum_{n=0}^\infty \frac{x^n}{n!}\,.
 $$
 
+---
 
 ### Ejemplo {-}
 
 Visualizar la función de densidad de probabilidad de una variable aleatoria con distribución $\textsf{t}_\nu$, para $\nu\in\{1,2,3,4,5\}$.
 
 ```{r, fig.align='center'}
-# visualización
-par(mar = c(3,3,1.5,1.5), mgp = c(1.75,0.75,0))
-curve(expr = dt(x, df = 1), n = 1000, col = 1, from = -5, to = 5, ylim = c(0,0.4), xlab = "x", ylab = "f(x)", main = "Distribución t Student")
-for (nu in 2:5)
-  curve(expr = dt(x, df = nu), n = 1000, col = nu, add = T)
-curve(expr = dnorm(x), n = 1000, col = "gray", lwd = 3, add = T)
-legend("topright", legend = c(paste0("v = ", 1:5), "Z"), col = c(1:5,"gray"), lwd = 2, bty = "n")
+# Visualización de la distribución t-Student con diferentes grados de libertad
+par(mar = c(3, 3, 1.5, 1.5), mgp = c(1.75, 0.75, 0))
+
+# Rango de x
+x_range <- seq(-5, 5, length.out = 1000)
+
+# Gráfica de la distribución t-Student para v = 1
+plot(x_range, dt(x_range, df = 1), type = "l", col = 1, lwd = 2, ylim = c(0, 0.4),
+     xlab = "x", ylab = "f(x)", main = "Distribución t-Student")
+
+# Añadir curvas para v = 2, ..., 5
+for (nu in 2:5) {
+  lines(x_range, dt(x_range, df = nu), col = nu, lwd = 2)
+}
+
+# Añadir la distribución normal estándar en gris
+lines(x_range, dnorm(x_range), col = "gray", lwd = 3)
+
+# Añadir leyenda
+legend("topright", legend = c(paste0("ν = ", 1:5), "Z"),
+       col = c(1:5, "gray"), lwd = 2, bty = "n")
 ```
 
-La distribución Normal estándar proporciona una **"buena aproximación"** (convergencia en distribución) a la distribución $\textsf{t}$ para tamaños de muestra de mayores o iguales a 30. La demostración se puede consultar en Hogg, McKean \& Craig (2018, p. 330).
+La distribución Normal estándar proporciona una **"buena aproximación"** (convergencia en distribución) a la distribución $\textsf{t}$ para tamaños de muestra de mayores o iguales a 30. 
 
-*(Teorema.)* Si $X_1,\ldots,X_n$ es una muestra aleatoria de una población con distribución Normal con media $\mu$ y varianza $\sigma^2$, entonces
+---
+
+**(Teorema.)** Si $X_1,\ldots,X_n$ es una muestra aleatoria de una población con distribución Normal con media $\mu$ y varianza $\sigma^2$, entonces
 $$
 \frac{\bar{X} - \mu}{S/\sqrt{n}}\sim\textsf{t}_{n-1}\,.
 $$
@@ -192,6 +236,7 @@ $$
 \end{align*}
 $$
 
+---
 
 # Distribución $\textsf{F}$
 
@@ -204,39 +249,82 @@ $$
 f_F(x) = \frac{\Gamma\left(\frac{n+m}{2}\right)}{\Gamma\left(\frac{n}{2}\right)\,\Gamma\left(\frac{m}{2}\right)}\,\left(\frac{n}{m}\right)^{n/2}\,x^{n/2 - 1}\,\left(1 + \frac{n}{m}\,x\right)^{-(n+m)/2} \,,\qquad x > 0\,.
 $$
 
+---
+
 ### Ejemplo {-}
 
 Visualizar la función de densidad de probabilidad de una variable aleatoria con distribución $\textsf{F}_{5,5}$, $\textsf{F}_{5,10}$, $\textsf{F}_{10,5}$ y $\textsf{F}_{10,10}$.
 
 ```{r, fig.align='center'}
-# visualización
-par(mar = c(3,3,1.5,1.5), mgp = c(1.75,0.75,0))
-curve(expr = df(x, df1 = 5,  df2 = 5 ), n = 1000, col = 1, from = 0, to = 6, ylim = c(0,0.8), xlab = "x", ylab = "f(x)", main = "Distribución F")
-curve(expr = df(x, df1 = 5,  df2 = 10), n = 1000, col = 2, add = T)
-curve(expr = df(x, df1 = 10, df2 = 5 ), n = 1000, col = 3, add = T)
-curve(expr = df(x, df1 = 10, df2 = 10), n = 1000, col = 4, add = T)
-legend("topright", legend = c("n = 5, m = 5", "n = 5, m = 10", "n = 10, m = 5", "n = 10, m = 10"), col = 1:4, lwd = 2, bty = "n")
+# Configuración de la visualización
+par(mar = c(3, 3, 1.5, 1.5), mgp = c(1.75, 0.75, 0))
+
+# Rango de valores de x
+x_range <- seq(0, 6, length.out = 1000)
+
+# Graficar la distribución F con diferentes grados de libertad
+plot(x_range, df(x_range, df1 = 5, df2 = 5), type = "l", col = 1, lwd = 2, ylim = c(0, 0.8),
+     xlab = "x", ylab = "f(x)", main = "Distribución F")
+
+# Añadir las demás curvas
+lines(x_range, df(x_range, df1 = 5, df2 = 10), col = 2, lwd = 2)
+lines(x_range, df(x_range, df1 = 10, df2 = 5), col = 3, lwd = 2)
+lines(x_range, df(x_range, df1 = 10, df2 = 10), col = 4, lwd = 2)
+
+# Agregar leyenda
+legend("topright", 
+       legend = c("n = 5, m = 5", "n = 5, m = 10", "n = 10, m = 5", "n = 10, m = 10"),
+       col = 1:4, lwd = 2, bty = "n")
 ```
+
+---
 
 **(Teorema.)** Si $X_1,\ldots,X_n$ y $Y_1,\ldots,Y_m$ son dos muestras aleatorias independientes de poblaciones Normales con medias $\mu_X$ y $\mu_Y$ y varianzas $\sigma^2_X$ y $\sigma^2_Y$, respectivamente, entonces  
 $$
-\frac{S^2_X/\sigma^2_X}{S^2_Y/\sigma^2_Y}\sim\textsf{F}_{n-1.m-1}
+\frac{S^2_X/\sigma^2_X}{S^2_Y/\sigma^2_Y}\sim\textsf{F}_{n-1,m-1},,
 $$
 donde $S_X$ y $S^2_Y$ son las medias muestrales de  $X_1,\ldots,X_n$ y $Y_1,\ldots,Y_m$, respectivamente.
 
 *Demostración:* Ejercicio.
 
+---
 
 # Referencias {-}
 
 ```{r, eval = TRUE, echo=FALSE, out.width="25%", fig.pos = 'H', fig.align = 'center'}
-knitr::include_graphics("mayorga.jpg")
-```
-
-```{r, eval = TRUE, echo=FALSE, out.width="25%", fig.pos = 'H', fig.align = 'center'}
-knitr::include_graphics("ramachandran_tsokos.png")
-```
-
-```{r, eval = TRUE, echo=FALSE, out.width="25%", fig.pos = 'H', fig.align = 'center'}
 knitr::include_graphics("casella_berger.jpg")
 ```
+
+---
+
+# Ejercicios {-}
+
+
+- Sea $X\sim\chi^2_\nu$. Demostrar que $\textsf{E}(X) = \nu$ y $\textsf{Var}(X) = 2\nu$.
+
+- Sea $X\sim\textsf{t}_\nu$. Demostrar que $X^2\sim\textsf{F}_{1,\nu}$, es decir, $\textsf{t}_\nu^2 \equiv \textsf{F}_{1,\nu}$.
+
+- Sea $X\sim\textsf{t}_1$. ¿Cuál es la función de densidad de $X$? ¿Cómo se relaciona esta distribución con la distribución de Cauchy?
+
+- Sea $X\sim\textsf{F}_{n,m}$. Demostrar que $X^{-1}\sim\textsf{F}_{m,n}$, es decir, $\textsf{F}_{n,m}^{-1} \equiv \textsf{F}_{m,n}$.
+    
+- Sea $X_1,\ldots,X_n$ una muestra aleatoria de tamaño $n$ de una población Normal con media $\mu$ y varianza $\sigma^2$. Demostrar que 
+$$
+\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}\sim\textsf{N}(0,1)\,,
+$$
+donde $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$. Sugerencia: Demostrar que $\bar{X}\sim\textsf{N}(\mu,\sigma^2/n)$ y que si $X\sim\textsf{N}(\mu,\sigma^2)$, entonces $a X + b\sim\textsf{N}(a\mu+b,a^2\sigma^2)$, donde $a$ y $b$ son constantes, con $a\neq 0$. 
+
+- Sean $X_1,\ldots,X_n$ y $Y_1,\ldots,Y_m$ son dos muestras aleatorias independientes de poblaciones Normales con medias $\mu_X$ y $\mu_Y$ y varianzas $\sigma^2_X$ y $\sigma^2_Y$, respectivamente. Demostrar que 
+$$
+\frac{\left(\bar{X} - \bar{Y}\right) - (\mu_X - \mu_Y)}{\sqrt{\sigma^2_X/n + \sigma^2_Y/m}}\sim\textsf{N}(0,1)\,,
+$$
+donde $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$ y $\bar{Y} = \frac{1}{m}\sum_{i=1}^m Y_i$.
+
+- Sea $\bar{X}$ el promedio muestral de una muestra aleatoria de tamaño $n=16$ proveniente de una población normal con media $0$ y varianza $1$. Determinar el valor de $c$ tal que
+$$
+\textsf{Pr}\left(|\bar{X}| < c\right) = 0.5\,.
+$$
+
+- Visualizar la función de distribución acumulada de una variable aleatoria con distribución $\textsf{t}_\nu$, para $\nu\in\{1,2,3,4,5,10,25,50,100\}$. Superponer la función de distribución acumulada de una variable aleatoria con distribución $\textsf{N}(0,1)$.
+
+---
