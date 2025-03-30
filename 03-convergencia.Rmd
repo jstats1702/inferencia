@@ -7,9 +7,10 @@ author:
 date: ""
 output:
   html_document:
-    highlight: default
-    number_sections: yes
-    theme: cosmo
+    toc: true
+    toc_float: true
+    theme: cerulean
+    highlight: kate
 ---
 
 ```{r setup, include=FALSE}
@@ -19,7 +20,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introducción
 
-Estudiar la **convergencia** de una **sucesión de variables aleatorias** $X_1,X_2,\ldots$ definidas sobre el mismo *espacio de probabilidad* $(\Omega,\mathcal{F},\textsf{P})$ es fundamental para derivar las propiedades de los estadísticos cuando **crece el tamaño de la muestra**.
+Estudiar la **convergencia** de una **sucesión de variables aleatorias** $X_1,X_2,\ldots$ definidas sobre el mismo espacio de probabilidad $(\Omega,\mathcal{F},\textsf{P})$ es fundamental para derivar las propiedades de los estadísticos cuando **crece el tamaño de la muestra**.
+
+---
 
 # Convergencia casi segura
 
@@ -36,23 +39,14 @@ $$
 
 La convergencia casi segura también se denomina **convergencia fuerte**.
 
+---
+
 **(Definición.)** Se dice que la sucesión de variables aleatorias $X_1,X_2,\ldots$ **converge casi seguro a la variable aleatoria $X$** si la sucesión $X_1-X,X_2-X,\ldots$ converge casi seguro a $0$, lo que se denota 
 $$
 X_n\xrightarrow{\text{c.s.}} X\,.
 $$
 
-
-### Ejemplo {-}
-
-Sea $X_n\sim\textsf{Bernoulli}(0.5^n)$, para $n=1,2,\ldots$. Demostrar que $X_n\xrightarrow{\text{c.s.}} 0$.
-
-En este caso se tiene que $\textsf{P}(X_n = 0) = 1 - 0.5^n$. Por lo tanto, se tiene que
-$$
-\textsf{P}\left(\lim_{n\to\infty} X_n = 0\right) = 1
-\quad\therefore\quad
-X_n\xrightarrow{\text{c.s.}} 0\,,
-$$
-pues $X_n\sim\textsf{Bernoulli}(0)$ cuando $n\to\infty$.
+---
 
 **(Teorema.)** Sea $X_1,X_2,\ldots$ una secuencia de variables aleatorias. Si para todo $\epsilon > 0$ se tiene que
 $$
@@ -60,16 +54,41 @@ $$
 $$
 entonces $X_n\xrightarrow{\text{c.s.}} X$.
 
+---
+
+### Ejemplo {-}
+
+Sea $X_n\sim\textsf{Bernoulli}(0.5^n)$, para $n=1,2,\ldots$. Demostrar que $X_n\xrightarrow{\text{c.s.}} 0$.
+
+Dado que \( X_n \sim \textsf{Bernoulli}(0.5^n) \), sabemos que \( X_n \) solo toma los valores \( 0 \) y \( 1 \), por lo que para cualquier \( \epsilon > 0 \),  
+$$
+\textsf{P} (|X_n - 0| > \epsilon) = \textsf{P} (X_n = 1) = 0.5^n.
+$$
+Sustituyendo en la suma del teorema, obtenemos la serie geométrica  
+$$
+\sum_{n=1}^{\infty} 0.5^n.
+$$
+Dado que esta es una serie geométrica con razón \( 0.5 \) y primer término \( 0.5 \), su suma infinita es  
+$$
+\sum_{n=1}^{\infty} 0.5^n = \frac{0.5}{1 - 0.5} = 1 < \infty.
+$$
+Por lo tanto, se cumplen las condiciones del teorema, lo que implica que $X_n \xrightarrow{\text{c.s.}} 0$.
+
+---
+
 **(Teorema: Ley fuerte de los grandes números.)** Sea $X_1,X_2,\ldots$ una secuencia de variables aleatorias iid de una población con media $\mu$ y varianza $\sigma^2$. Si $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i$, entonces
 $$
 \bar{X}_n \xrightarrow{\text{c.s.}} \mu\,.
 $$
+
+---
 
 **(Teorema.)** Sea $X_1,X_2,\ldots$ una secuencia de variables aleatorias iid de una población con media $\mu$ y varianza $\sigma^2$. Si $S^2_n = \frac{1}{n-1}\sum_{i=1}^n (X_i-\bar{X}_n)^2$, entonces
 $$
 S^2_n \xrightarrow{\text{c.s.}} \sigma^2\,.
 $$
 
+---
 
 # Convergencia en probabilidad
 
@@ -88,6 +107,8 @@ $$
 
 La convergencia en probabilidad también se denomina se denomina **convergencia débil** o **convergencia estocástica**.
 
+---
+
 **(Teorema: Ley débil de los grandes números).** Sea $X_1,X_2,\ldots$ una secuencia de variables aleatorias iid de una población con media $\mu$ y varianza $\sigma^2$. Si $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i$, entonces
 $$
 \bar{X}_n \xrightarrow{\text{p}} \mu\,.
@@ -95,7 +116,7 @@ $$
 
 *Demostración:*
 
-La *desigualdad de Chebyschev* señala que si $X$ es una variable aleatoria con media $\mu$ y varianza $\sigma^2$, entonces para todo $\epsilon > 0$ se satisface que 
+La **desigualdad de Chebyschev** señala que si $X$ es una variable aleatoria con media $\mu$ y varianza $\sigma^2$, entonces para todo $\epsilon > 0$ se satisface que 
 $$
 \textsf{P}(|X - \mu|\geq\epsilon) \leq \frac{\sigma^2}{\epsilon^2}\,.
 $$
@@ -106,6 +127,7 @@ $$
 $$
 Por lo tanto, si $n\to\infty$, entonces $\textsf{P}\left( |\bar{X}_n - \mu| \geq \epsilon \right) \to 0$, y en consecuencia, $\textsf{P}\left( |\bar{X}_n - \mu| < \epsilon \right) \to 1$, de donde $\bar{X}_n\xrightarrow{\text{p}} 0$.
 
+---
 
 ### Ejemplo {-}
 
@@ -116,19 +138,31 @@ Aplicando la desigualdad de Chebyschev se demuestra que el resultado deseado.
 A continuación se ilustra numéricamente el resultado para $\epsilon \in \{0.1,0.2,0.3,0.4,0.5\}$:
 
 ```{r, fig.align='center'}
-# visualización
-par(mar = c(3,3,1.5,1.5), mgp = c(1.75,0.75,0))
+# Configuración de la visualización
+par(mar = c(3, 3, 1.5, 1.5), mgp = c(1.75, 0.75, 0))
+
+# Definir rango de valores para n y epsilons
 N <- 100
-plot(x = NA, y = NA, xlim = c(1,N), ylim = c(0,1), xlab = "n", ylab = "Probabilidad", main = "")
-for (eps in seq(from = 0.1, to = 0.5, by = 0.1)) {
-  P <- NULL
-  for (n in 1:N)
-    P[n] <- 1- 2*pnorm(q = eps, mean = 0, sd = sqrt(1/n), lower.tail = F)
-  lines(x = 1:N, y = P, type = "p", col = 10*eps, pch = 16, cex = 0.5)
+eps_values <- seq(0.1, 0.5, by = 0.1)
+colors <- 1:length(eps_values)  # Definir colores de forma clara
+
+# Crear un gráfico vacío con los límites adecuados
+plot(NA, NA, xlim = c(1, N), ylim = c(0, 1), 
+     xlab = "n", ylab = "Probabilidad", main = "")
+
+# Calcular y graficar las probabilidades para cada valor de epsilon
+for (i in seq_along(eps_values)) {
+  eps <- eps_values[i]
+  P <- 1 - 2 * pnorm(q = eps, mean = 0, sd = sqrt(1 / (1:N)), lower.tail = FALSE)
+  points(1:N, P, col = colors[i], pch = 16, cex = 0.5)
 }
-legend("bottom", legend = seq(from = 0.1, to = 0.5, by = 0.1), col = 1:5, fill = 1:5, border = 1:5, bty = "n", horiz = T)
+
+# Agregar leyenda
+legend("bottom", legend = as.character(eps_values), col = colors, pch = 16, 
+       bty = "n", horiz = TRUE, title = expression(epsilon))
 ```
 
+---
 
 ### Ejemplo {-}
 
@@ -159,6 +193,7 @@ $$
 \textsf{P}\left(\omega\in\Omega:I_{A_n}(\omega) < \epsilon\,\,\text{cuando}\,\, n\to\infty \right) < 1\,.
 $$
 
+---
 
 # Convergencia en media 
 
@@ -174,6 +209,7 @@ $$
 
 Si $r = 1$ ($r=2$), entonces se dice que la sucesión converge en **valor esperado** (**meda cuadrática**).
 
+---
 
 ### Ejemplo {-}
 
@@ -190,10 +226,13 @@ $$
 $$
 de donde $X_n\xrightarrow{L_r} 0$.
 
+---
 
 ### Ejercicio {-}
 
 Establecer una sucesión de variables aleatorias tales que $X_n\xrightarrow{\text{p}} X$, pero $X_n\not\xrightarrow{L_r}X$ para ningún $r\geq 1$. 
+
+---
 
 # Convergencia en distribución
 
@@ -205,6 +244,8 @@ donde $F_{X_n}$ y $F_X$ son las funcione de distribución acumuladas de $X_n$ y 
 $$
 X_n\xrightarrow{\text{d}} X\,.
 $$
+
+---
 
 ### Ejemplo {-}
 
@@ -234,30 +275,60 @@ $$
 y por lo tanto $X_n\xrightarrow{\text{d}} X$. A continuación se ilustra visualmente que $X_n\xrightarrow{\text{d}} X$ por medio de las funciones de distribución acumulada:
 
 ```{r, fig.align='center'}
-Fn <- function(x, n) 1 - (1 - 1/n)^{n*x}
-# visualización
-par(mar = c(3,3,1.5,1.5), mgp = c(1.75,0.75,0))
-curve(expr = pexp(x, rate = 1), n = 1000, col = "blue", lwd = 4, from = 0, to = 4, xlab = "x", ylab = "Distr. Acumulada", main = "")
-for (n in 2:30)
-  curve(expr = Fn(x, n), n = 1000, add = T)
-legend("bottomright", legend = c("Exp(1)",expression(X[n])), col = c("blue","black"), lwd = 2, bty = "n")
+# Definir la función Fn
+Fn <- function(x, n) 1 - (1 - 1/n)^(n*x)
+
+# Configuración de la visualización
+par(mar = c(3, 3, 1.5, 1.5), mgp = c(1.75, 0.75, 0))
+
+# Definir el rango de x
+x_range <- seq(0, 4, length.out = 1000)
+
+# Graficar la función de distribución acumulada de Exp(1)
+plot(x_range, pexp(x_range, rate = 1), type = "l", col = "blue", lwd = 3,
+     xlab = "x", ylab = "Distr. Acumulada", main = "")
+
+# Graficar Fn(x, n) para diferentes valores de n
+for (n in 2:30) {
+  lines(x_range, Fn(x_range, n), col = "black", lwd = 1)
+}
+
+# Agregar leyenda
+legend("bottomright", legend = c(expression(Exp(1)), expression(X[n])), 
+       col = c("blue", "black"), lwd = c(3, 1), bty = "n")
 ```
 
+---
 
 ### Ejemplo {-}
 
 A continuación se ilustra visualmente que $t_n\xrightarrow{\text{d}} Z$ por medio de las funciones de distribución acumulada. 
 
 ```{r, fig.align='center'}
-# visualización
-par(mar = c(3,3,1.5,1.5), mgp = c(1.75,0.75,0))
-curve(expr = pnorm(x), n = 1000, col = "blue", lwd = 4, from = -4, to = 4, xlab = "x", ylab = "Distr. Acumulada", main = "")
-for (n in 1:30)
-  curve(expr = pt(x, df = n), n = 1000, add = T)
-abline(v = 0, h = 0.5, col = "lightgray")
-legend("bottomright", legend = c("Z",expression(t[n])), col = c("blue","black"), lwd = 2, bty = "n")
+# Configuración de la visualización
+par(mar = c(3, 3, 1.5, 1.5), mgp = c(1.75, 0.75, 0))
+
+# Definir el rango de x
+x_range <- seq(-4, 4, length.out = 1000)
+
+# Graficar la f.d.a. de la normal estándar
+plot(x_range, pnorm(x_range), type = "l", col = "blue", lwd = 3,
+     xlab = "x", ylab = "Distr. Acumulada", main = "")
+
+# Graficar la f.d.a. de la t de Student para diferentes grados de libertad
+for (n in 1:30) {
+  lines(x_range, pt(x_range, df = n), col = "black", lwd = 1)
+}
+
+# Agregar líneas de referencia
+abline(v = 0, h = 0.5, col = "lightgray", lty = 2)
+
+# Agregar leyenda
+legend("bottomright", legend = c(expression(Z), expression(t[n])),
+       col = c("blue", "black"), lwd = c(3, 1), bty = "n")
 ```
 
+---
 
 ### Ejemplo {-}
 
@@ -275,23 +346,42 @@ $$
   1 & \text{si}\,\,x > 0\,. \\
 \end{cases}
 $$
-Así, $X_n\xrightarrow{\text{d}} 0$ dado que $F_{X_n}(x)\to F(x)$ para todo $x\neq 0$, donde $F$ es la función de distribución acumulada de un punto de masa en 0. A continuación se ilustra visualmente que $X_n\xrightarrow{\text{d}} 0$ por medio de las funciones de distribución acumulada:
-
-```{r, fig.align='center'}
-# visualización
-par(mar = c(3,3,1.5,1.5), mgp = c(1.75,0.75,0))
-plot(x = NA, y = NA, xlim = c(-4,4), ylim = c(0,1), xlab = "x", ylab = "Distr. Acumulada", main = "")
-for (n in 1:100)
-  curve(expr = pnorm(x, mean = 0, sd = 1/sqrt(n)), n = 1000, add = T)
-abline(v = 0, h = 0.5, col = "lightgray")
-```
+Así, $X_n\xrightarrow{\text{d}} 0$ dado que $F_{X_n}(x)\to F(x)$ para todo $x\neq 0$, donde $F$ es la función de distribución acumulada de un punto de masa en 0. 
 
 Finalmente, se observa que $F_{X_n}(0)=0.5$, para $n=1,2,\ldots$, mientras que $F(0) = 1$, i.e., la convergencia en distribución no se tiene para $x=0$, pero esto no importa porque $F$ no es continua en $x=0$.
 
+A continuación se ilustra visualmente que $X_n\xrightarrow{\text{d}} 0$ por medio de las funciones de distribución acumulada:
+
+```{r, fig.align='center'}
+# Configuración de la visualización
+par(mar = c(3, 3, 1.5, 1.5), mgp = c(1.75, 0.75, 0))
+
+# Definir el rango de x
+x_range <- seq(-4, 4, length.out = 1000)
+
+# Crear un gráfico vacío con los límites adecuados
+plot(NA, NA, xlim = c(-4, 4), ylim = c(0, 1),
+     xlab = "x", ylab = "Distribución Acumulada", main = "")
+
+# Graficar la f.d.a. normal con varianza decreciente
+for (n in 1:100) {
+  lines(x_range, pnorm(x_range, mean = 0, sd = 1 / sqrt(n)), col = "black", lwd = 0.5)
+}
+
+# Agregar líneas de referencia
+abline(v = 0, h = 0.5, col = "lightgray", lty = 2)
+
+# Agregar leyenda
+legend("bottomright", legend = expression(N(0, 1/n)), col = "black", lwd = 1, bty = "n")
+```
+
+---
 
 ### Ejercicio {-}
 
 Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias tales que $X_n = -X$, para $n=1,2,\ldots$, donde $X\sim\textsf{Normal}(0,1)$. Demostrar que $X_n\xrightarrow{\text{d}} X$, pero $X_n\not\xrightarrow{\text{p}}X$. 
+
+---
 
 **(Teorema de Lindeberg-Lévy: Teorema del Límite Central.)** Sean $X_1,X_2,\ldots, X_n$ es una muestra aleatoria de una población con media $\mu$ y varianza $\sigma^2$ finitas. Entonces,
 $$
@@ -299,28 +389,39 @@ $$
 $$
 donde $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_n$ $Z\sim\textsf{Normal}(0,1)$.
 
-*Demostración:* Ver Mayorga (2004, pp. 29-30).
-
+---
 
 ### Ejemplo {-}
 
 Sea $X_1,\ldots, X_n$ una muestra aleatoria de tamaño $n$ de una población $X$ con distribución Exponencial con parámetro de razón $\lambda = 1$. Simular $N=100000$ de realizaciones de $X_1,\ldots, X_n$, para $n\in\{5,10,30,50,100,200\}$ y visualizar tanto la población como la distribución empírica del promedio muestral.
 
 ```{r, fig.width=9, fig.height=6, fig.align='center'}
-# tamaños
+# Configuración de tamaños y gráfico
 N <- 100000
-par(mfrow = c(2,3), mar = c(3,3,1.5,1.5), mgp = c(1.75,0.75,0))
+sample_sizes <- c(5, 10, 30, 50, 100, 200)
+par(mfrow = c(2, 3), mar = c(3, 3, 1.5, 1.5), mgp = c(1.75, 0.75, 0))
+
+# Generar y visualizar histogramas de las medias muestrales
 set.seed(123)
-for (n in c(5,10,30,50,100,200)) {
-  xb <- NULL
-  for (j in 1:N)
-    xb[j] <- mean(rexp(n = n, rate = 1))
-  hist(x = xb, freq = F, breaks = 25, col = "gray", border = "gray", xlim = c(0,3), ylim = c(0,6), xlab = "Promedio", ylab = "Densidad", main = "")
+for (n in sample_sizes) {
+  # Generar medias muestrales de distribuciones exponenciales
+  xb <- replicate(N, mean(rexp(n, rate = 1)))
+
+  # Graficar histograma
+  hist(xb, freq = FALSE, breaks = 25, col = "gray", border = "gray",
+       xlim = c(0, 3), ylim = c(0, 6), 
+       xlab = "Promedio", ylab = "Densidad", main = "")
+
+  # Agregar leyenda con el tamaño de muestra
   legend("topright", legend = paste0("n = ", n), bty = "n", cex = 1.5)
-  curve(expr = dexp(x, rate = 1), from = 0, to = 3, n = 1000, col = "royalblue", add = T)
+
+  # Agregar curva de densidad exponencial
+  curve(dexp(x, rate = 1), from = 0, to = 3, n = 1000, 
+        col = "royalblue", add = TRUE, lwd = 2)
 }
 ```
 
+---
 
 ### Ejercicio {-}
 
@@ -330,7 +431,7 @@ $$
 $$
 donde $P_n = \frac{1}{n}\sum_{i=1}^n X_n$ $Z\sim\textsf{Normal}(0,1)$. Empíricamente, ¿qué tan buena es la aproximación para $n = 30$ y $\pi = 0.05$? ¿Y para $n = 30$ y $\pi = 0.50$?
 
-
+---
 
 # Propiedades de la convergencia
 
@@ -345,17 +446,22 @@ donde $P_n = \frac{1}{n}\sum_{i=1}^n X_n$ $Z\sim\textsf{Normal}(0,1)$. Empírica
 knitr::include_graphics("03_convergencia.png")
 ```
 
+---
+
 **(Teorema: Teorema de Lévy.)** Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias y $X$ una variable aleatoria definidas sobre el mismo espacio de probabilidad. Si las funciones generadoras de momentos de $X_1,X_2,\ldots$ existen para todo $t$ en algún intervalo alrededor de 0, entonces se tiene que
 $$
 X_n\xrightarrow{\text{d}} X\qquad\Longleftrightarrow\qquad m_{X_n}(t)\to m_X(t)\,\,\text{cuando}\,\,n\to\infty\,.
 $$
 
+---
 
 ### Ejercicio {-}
 
 Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias tales que $X_n\sim\chi^2_n$. Demostrar que $X_n/n\xrightarrow{\text{d}} 1$. 
 
-**(Teorema.)** Sean $X_1,X_2,\ldots$ y $Y1_1,Y_2,\ldots$ dos sucesiones de variables aleatorias y $X$ y $Y$ dos variables aleatorias definidas sobre el mismo espacio de probabilidad. Además, sea $f$ una función continua. Entonces, se tiene que
+---
+
+**(Teorema.)** Sean $X_1,X_2,\ldots$ y $Y_1,Y_2,\ldots$ dos sucesiones de variables aleatorias y $X$ y $Y$ dos variables aleatorias definidas sobre el mismo espacio de probabilidad. Además, sea $f$ una función continua. Entonces, se tiene que
 
 - Si $X_n\xrightarrow{\text{c.s.}} X$, entonces $f(X_n)\xrightarrow{\text{c.s.}} f(X)$.
 - Si $X_n\xrightarrow{\text{p}} X$,    entonces $f(X_n)\xrightarrow{\text{p}} f(X)$.
@@ -363,14 +469,19 @@ Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias tales que $X_n\sim\ch
 - Si $X_n\xrightarrow{\text{c.s.}} X$ y $Y_n\xrightarrow{\text{c.s.}} Y$, entonces $X_n+Y_n\xrightarrow{\text{c.s.}} X+Y$ y $X_n\,Y_n\xrightarrow{\text{c.s.}} X\,Y$.
 - Si $X_n\xrightarrow{\text{p}} X$ y $Y_n\xrightarrow{\text{p}} Y$, entonces $X_n+Y_n\xrightarrow{\text{p}} X+Y$ y $X_n\,Y_n\xrightarrow{\text{p}} X\,Y$.
 
+---
+
 **(Teorema de Slutsky.)** Sean $X_1,X_2,\ldots$ y $Y_1,Y_2,\ldots$ dos sucesiones de variables aleatorias y $X$ y una variables aleatorias definidas sobre el mismo espacio de probabilidad. Además, sea $c$ una constante. Si $X_n\xrightarrow{\text{d}} X$ y $Y_n\xrightarrow{\text{d}} c$, entonces se tiene que
 
 - $X_n + Y_n\xrightarrow{\text{d}} X + c$.
 - $X_n\,Y_n\xrightarrow{\text{d}} c\,X$.
 - $X_n/Y_n\xrightarrow{\text{d}} X/c$ siempre que $c\neq 0$.
 
+---
+
 **(Ejercicio.)** Probar que $t_n\xrightarrow{\text{d}} Z$ teniendo en cuenta que $\chi^2_n/n\xrightarrow{\text{d}} 1$.
 
+---
 
 # Método Delta
 
@@ -383,21 +494,86 @@ $$
 \sqrt{n}\,\frac{g(Y_n)-g(\mu)}{|g'(\mu)|\,\sigma}\xrightarrow{\text{d}}\textsf{Normal}(0,1)\,.
 $$
 
+---
+
 ### Ejercicio {-}
 
 Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias iid con media $\mu$ y varianza $\sigma^2$ y $W_n=\exp{(\bar{X}_n)}$, donde $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i$. Demostrar que $W_n\xrightarrow{\text{d}}\textsf{Nornal}\left(e^\mu,e^{2\mu}\sigma^2/n\right)$.
 
+---
 
 # Referencias {-}
 
 ```{r, eval = TRUE, echo=FALSE, out.width="25%", fig.pos = 'H', fig.align = 'center'}
-knitr::include_graphics("mayorga.jpg")
-```
-
-```{r, eval = TRUE, echo=FALSE, out.width="25%", fig.pos = 'H', fig.align = 'center'}
-knitr::include_graphics("ramachandran_tsokos.png")
-```
-
-```{r, eval = TRUE, echo=FALSE, out.width="25%", fig.pos = 'H', fig.align = 'center'}
 knitr::include_graphics("casella_berger.jpg")
 ```
+
+---
+
+# Ejercicios {-}
+
+- **(Desigualdad de Markov).** Demostrar que si $X$ es una variable aleatoria no negativa, entonces para todo $\epsilon > 0$ se tiene que
+$$
+\textsf{P}(X \geq \epsilon) \leq \frac{\textsf{E}(X)}{\epsilon}\,. 
+$$
+
+- **(Desigualdad de Chebyshev).** Demostrar que si $X$ es una variable aleatoria con media $\mu$ y varianza $\sigma^2$, entonces para todo $\epsilon > 0$ se tiene que
+$$
+\textsf{P}(|X-\mu| \geq \epsilon) \leq \frac{\sigma^2}{\epsilon^2}\,.
+$$
+
+- Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con función de densidad $f_X(x) = 2x\,I_{(0,1)}(x)$. Hallar la distribución muestral del mínimo de la muestra. Sugerencia: Usar el Corolario 1.5.3. de Mayorga (2004).
+
+- Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población con distribución Exponencial con parámetro de razón $\theta$:
+
+     a. Hallar la distribución muestral del promedio muestral.
+     b. Hallar la distribución muestral del mínimo de la muestra. Sugerencia (a): Usar la función generadora de momentos y el Corolario 1.5.3. de Mayorga (2004).
+
+- Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población con distribución Exponencial con parámetro de razón $\theta$. Determinar la distribución muestral del total de la muestra. Sugerencia: Usar la función generadora de momentos.
+
+- Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con función de densidad $f_X(x) = x\,e^{-x} I_{(0,\infty)}(x)$. Determinar el valor de $a$ tal que $\textsf{P}(\bar{X} > a) = 0.95$. Sugerencia: Usar la función generadora de momentos.
+
+- Un dispositivo electrónico opera con base en el funcionamiento de $n$ componentes conectados en serie que funcionan de manera independiente. Si el tiempo de falla de cualquier componente se modela como una variable aleatoria con distribución Exponencial con parámetro de razón $\theta$, determinar el valor esperado y la varianza del tiempo de funcionamiento del dispositivo. Sugerencia: El tiempo de funcionamiento del dispositivo es $T=\sum_{i=1}^n X_i$, donde $X_i$ el tiempo de falla del dispositivo $i$, para $i=1,\ldots,n$.  
+
+- Considerar una muestra aleatoria de 36 botellas correspondiente a la línea de llenado A. Estando el proceso de llenado bajo control, el contenido de una de botella (en mililitros) en la línea de llenado A se modela como una variable aleatoria con distribución Normal con valor esperado $\mu$ y desviación estándar 12. Se considera otra muestra aleatoria de 49 botellas de la línea de llenado B. De manera similar, estando el proceso bajo control, el contenido de una botella (en mililitros) en la línea de llenado B se modela como una variable aleatoria con distribución Normal con valor esperado $\mu$ y desviación estándar 4. Determinar la probabilidad de que los promedios muestrales difieran a lo sumo en 3 mililitros. Sugerencia: Considerar la variable aleatoria $\bar{X} - \bar{Y}$, donde $\bar{X}$ y $\bar{Y}$ son los promedios muestrales de las líneas de llenado $A$ y $B$, respectivamente.
+
+- Sea $X_1,\ldots, X_n$ una muestra aleatoria de una población con valor esperado $\mu$ y varianza 4. Determinar el tamaño mínimo de la muestra para el cual la probabilidad de que el valor esperado y el promedio de la muestra no difieran en más de 0.1 sea superior a 0.95. Sugerencia: Usar la desigualdad de Chebyshev.
+
+- La fracción de baldosas de cerámica con imperfectos producidas por una compañía es del 0.8\% cuando el proceso está bajo control. Determinar el tamaño de muestra mínimo para el cual la probabilidad de que la proporción de baldosas con imperfectos en la muestra y la fracción con imperfectos no difieran en más del 1\% sea superior a 0.95. Sugerencia: Usar la desigualdad de Chebyshev.
+
+- Una norma de control de calidad establece que se deben realizar 36 mediciones para determinar la idoneidad de medición de un equipo. El equipo debe estar calibrado de tal forma que la variabilidad en cada medición, cuantificada por medio de la desviación estándar, es de $\sigma$ unidades. Utilizar la desigualdad de Chebyshev y el teorema del límite central en forma comparativa, para establecer el valor mínimo de la probabilidad de que el promedio de las mediciones difiera a lo sumo del verdadero valor promedio en $\sigma/5$ unidades. ¿Cuál es la razón de la diferencia de los resultados?
+
+- Sean \( X, X_1, X_2, \dots \) variables aleatorias i.i.d. con distribución Bernoulli de parámetro \( \frac{1}{2} \). Mostrar que $X_n$ no converge en probabilidad a $X$.
+
+- Sea \( \{X_n\}_{n \geq 1} \) una sucesión de variables aleatorias reales que satisface $\textsf{E}(X_n) = \mu_n \xrightarrow{n \to \infty} c$ y $\textsf{Var}(X_n) = \sigma_n^2 \xrightarrow{n \to \infty} 0$. Demostrar que \( X_n \xrightarrow{\text{p}} c \). Sugerencia: Utilizar la desigualdad de Chebyshev.
+
+- Sea \( \{X_n\}_{n \geq 1} \) una sucesión de variables aleatorias i.i.d. con distribución uniforme en el intervalo \( (0,1) \). Sea $Y_n = \max\{X_1, X_2, \dots, X_n\}$. Verificar numérica y visualmente que \( Y_n \) se aproxima a 1 a medida que \( n \) crece.
+
+- Sea \( \{X_n\}_{n \geq 1} \) una sucesión de variables aleatorias i.i.d. con \( \textsf{E}(X_1) = \mu \) y \( \textsf{Var}(X_1) = \sigma^2 < \infty \). Demostrar que \( X_n \xrightarrow{L_2} \mu \).
+
+- Sea \( \{X_n\}_{n \geq 1} \) una sucesión de variables aleatorias i.i.d. con \( X_1 \sim \textsf{Exp}(\lambda) \), y \( Y_n = \min\{X_1, \dots, X_n\} \) para todo \( n \geq 1 \). Mostrar que \( n Y_n \xrightarrow{d} Y_1 \). Sugerencia: Ver ejemplo 3.27 de González y Jiménez (2025).
+
+- Demuestre que si la sucesión $X_1,X_2,\ldots$ converge en media, entonces $X_1,X_2,\ldots$ también converge en probabilidad. Sugerencia: Usar la desigualdad de Markov.
+
+- Demuestre que el promedio basado en una muestra de tamaño $n$ de una población con valor esperado $\mu$ y varianza $\sigma^2$ converge en media cuadrática a $\mu$.
+
+- Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias con distribución Logística con parámetro de localización 0 y parámetro de escala $\frac{1}{n}$. Demostrar que $X_n\xrightarrow{\text{d}} 0$.
+
+- Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias con distribución Laplace con parámetro de localización 0 y parámetro de escala $\frac{1}{n}$. Demostrar que $X_n\xrightarrow{\text{p}} 0$.
+
+- Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias con distribución Poisson con parámetro $n\theta$. Demostrar que $X_n/n\xrightarrow{L_2}\theta$.
+
+- Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población con distribución Uniforme en el intervalo $(0,\theta)$. Demostrar que el máximo de la muestra converge en probabilidad a $\theta$. Sugerencia: Usar el Corolario 1.5.3. de Mayorga (2004).
+
+- Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población con distribución Exponencial con parámetro de razón $\theta$. Demostrar que $\sqrt{n}(\theta\bar{X}_n - 1)\xrightarrow{\text{d}} \textsf{N}(0,1)$. Sugerencia: Usar el Teorema del Límite Central.
+
+- Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población con distribución Bernoulli con parámetro $\theta$. Demostrar que
+$$
+\frac{\bar{X}_n-\theta}{\sqrt{\frac{\bar{X}_n(1-\bar{X}_n)}{n}}}\xrightarrow{\text{d}} \textsf{N}(0,1)\,.
+$$
+     
+     Sugerencia: Usar propiedades de convergencia y el Teorema de Slutsky.
+
+- Demostrar que $\textsf{t}_n\xrightarrow{\text{d}} Z$. Sugerencia: Usar propiedades de convergencia y el Teorema de Slutsky.
+
+---
