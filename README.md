@@ -1,6 +1,6 @@
 # inferencia
 
-Materiales del curso de Análisis Estadístico de Redes Sociales ofreciendo en el Departamento de Estadística de la Universidad Nacional de Colombia.
+Materiales del curso de Inferencia Estadística ofreciendo en el Departamento de Estadística de la Universidad Nacional de Colombia.
 
 ## Contenido
 
