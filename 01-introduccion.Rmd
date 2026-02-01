@@ -11,12 +11,12 @@ output:
     toc_float: true
     theme: cerulean
     highlight: kate
+    mathjax: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 
 # Inferencia Estadística
 
@@ -53,12 +53,6 @@ donde $f_X(x)$ es la función de densidad de probabilidad de $X$.
 round(pgamma(q = 1, shape = 2, rate = 3, lower.tail = F), 4)
 ```
 
-```{r}
-# Usando experimentación
-set.seed(123)
-x <- rgamma(n = 100000, shape = 2, rate = 3)
-round(mean(x > 1), 4)
-```
 ---
 
 # Tipos de inferencia
@@ -127,7 +121,7 @@ El objetivo de la inferencia son los parámetros del modelo probabilístico.
 **Con:**
 
 - Hay que especificar un modelo probabilístico que se supone habría generado los datos.
-- Se deben verificar empíricamente los supuestos del modelo para que la inferencia goce validez.
+- Se deben verificar empíricamente los supuestos del modelo para que la inferencia goce de validez.
 - No es posible hacer inferencia acerca de una población finita particular.
 
 ```{r, eval = TRUE, echo=FALSE, out.width="70%", fig.pos = 'H', fig.align = 'center'}
@@ -138,7 +132,7 @@ knitr::include_graphics("01_modelos.png")
 
 # Inferencia estadística paramétrica frecuentista
 
-La **inferencia estadística** basada en el modelo es un proceso inductivo que utiliza *datos* para *aprender* acerca de los parámetros de la *distribución de probabilidad* que se asume que generó esos datos.
+La **inferencia estadística** basada en el modelo es un proceso inductivo que utiliza *datos* para *aprender* acerca de los parámetros de la *distribución de probabilidad* que se **asume** que generó esos datos.
 
 Los **procesos de inferencia** (aprendizaje) se pueden enmarcar de tres maneras: *estimación puntual*, *intervalos de confianza* y *prueba de hipótesis*.
 
@@ -158,7 +152,7 @@ knitr::include_graphics("01_all_models_are_wrong.jpg")
 
 **(Definición.)** Un **modelo paramétrico** $\mathcal{P}$ es un conjunto de distribuciones de probabilidad que se definen por medio de un *conjunto finito de parámetros*. Específicamente, un modelo paramétrico $\mathcal{P} = \{f(x;\boldsymbol{\theta}):\boldsymbol{\theta}\in\Theta\}$, donde $\boldsymbol{\theta}=(\theta_1,\ldots,\theta_k)$ es un parámetro desconocido que toma valores en el *espacio de parámetros* $\Theta$.
 
-La **población** corresponde a una *distribución de probabilidad* con parámetros fijos desconocidos definida en el espacio de resultados de todos los posibles variables que podría asumir la variable objeto de estudio.
+La **población** corresponde a una *distribución de probabilidad* con **parámetros fijos desconocidos** definida en el espacio de resultados de todos los posibles variables que podría asumir la variable objeto de estudio.
 
 ---
 
@@ -190,7 +184,7 @@ donde $\boldsymbol{X}=(X_1,\ldots,X_n)$ es un vector aleatorio $n$-dimensional y
 
 Sea $X_1,\ldots, X_5$ una muestra aleatoria de tamaño $n=5$ de una población $X$ con distribución Gamma con parámetro de forma $\alpha = 2$ y parámetro de razón $\beta = 3$. Simular una realización de la muestra aleatoria.
 
-En este caso se tiene que $X_i\stackrel{\text{i.i.d.}}{\sim}\textsf{Gamma}(2,3)$, para $i=1,\ldots,10$. Así, una realización de la muestra aleatoria es:
+En este caso se tiene que $X_i\stackrel{\text{i.i.d.}}{\sim}\textsf{Gamma}(2,3)$, para $i=1,\ldots,5$. Así, una realización de la muestra aleatoria es:
 
 ```{r}
 # Simulación
@@ -206,7 +200,7 @@ round(x, 4)
 Sea $X_1,\ldots, X_5$ una muestra aleatoria de tamaño $n=5$ de una población $X$ con distribución Gamma con parámetro de forma $\alpha = 2$ y parámetro de razón $\beta = 3$. Simular $N=100000$ de realizaciones de $X_1,\ldots, X_5$ y visualizar tanto la distribución empírica como la distribución teórica de cada variable de la muestra.
 
 ```{r}
-# amaños
+# Tamaños
 N <- 100000
 n <- 5
 ```
@@ -250,7 +244,9 @@ for (i in seq_len(n)) {
 
 **(Definición).** Un **estadístico** es una función $T=T(X_1,\ldots,X_n)$ de la muestra aleatoria que *no depende* de ningún parámetro desconocido. 
 
-Los estadísticos son **variables aleatorias**. En efecto, si se seleccionan diferentes muestras de una población, entonces el valor de un estadístico cambia dependiendo de la muestra seleccionada.
+Los estadísticos son **variables aleatorias**. 
+
+Si se seleccionan diferentes muestras de una población, entonces el valor de un estadístico cambia dependiendo de la muestra seleccionada.
 
 ---
 
@@ -289,7 +285,11 @@ Demostrar que si $X_1,\ldots,X_n$ es una muestra aleatoria de tamaño $n$ de una
 
 La desviación estándar de la media muestral $\bar{X}$ es $\textsf{DE}(\bar{X}) = \sigma/\sqrt{n}$ y se conoce como **error estándar** de $\bar{X}$.
 
-La media muestral $\bar{X}$ es cada vez "mejor" como estimador de la media poblacional $\mu$ a medida que aumenta el tamaño de la muestra.
+---
+
+### Ejercicio {-}
+
+¿Por qué $\bar{X}$ "mejora" como estimador de $\mu$ cuando aumenta el tamaño muestral?
 
 ---
 
@@ -402,7 +402,7 @@ knitr::include_graphics("casella_berger.jpg")
 
 - ¿Cuáles son las características de la inferencia basada en el diseño y de la inferencia basada en el modelo? ¿Cuáles son los principales pros y contras de cada uno de estos tipos de inferencia?
 
-- ¿Cuál es la principal diferencia entre la inferencia frecuentista y la inferencia Ba\-ye\-sia\-na? ¿Cuál es la principal diferencia entre la inferencia paramétrica y inferencia no paramétrica?
+- ¿Cuál es la principal diferencia entre la inferencia frecuentista y la inferencia Bayesiana? ¿Cuál es la principal diferencia entre la inferencia paramétrica y inferencia no paramétrica?
 
 - Sea $X_1,\ldots,X_n$ una muestra aleatoria de tamaño $n$ de una población con media $\mu$ y varianza $\sigma^2$. 
 
