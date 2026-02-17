@@ -1,5 +1,5 @@
 ---
-title: "Distribuciones muestrales asociadas con la Normal"
+title: "Algunas distribuciones muestrales"
 author: 
 - Juan Sosa PhD
 - Email   jcsosam@unal.edu.co
@@ -11,6 +11,7 @@ output:
     toc_float: true
     theme: cerulean
     highlight: kate
+    mathjax: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 ---
 
 ```{r setup, include=FALSE}
@@ -19,9 +20,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introducción
 
-La distribución muestral de un estadístico depende de la distribución poblacional de la que se toma la muestra aleatoria. 
+La **distribución muestral** de un estadístico depende de la distribución poblacional de la que se toma la muestra aleatoria. 
 
-A continuación se estudian algunos estadísticos que se basan en una muestra aleatoria extraída de una distribución Normal.
+A continuación se estudian algunas distribuciones muestrales que se basan en una muestra aleatoria extraída de una distribución Normal.
 
 ---
 
@@ -56,13 +57,13 @@ $$
 
 # Distribución Chi-cuadrado
 
-La distribución **Chi-cuadrado** con $\nu$ grados de libertad es un caso particular de la **distribución Gamma** con parámetro de forma $\alpha = \nu/2$ y parámetro de razón $\beta = 1/2$, i.e., $\chi^2_n\equiv \text{Gamma}(n/2,1/2)$.
+La distribución **Chi-cuadrado** con $n$ grados de libertad es un caso particular de la **distribución Gamma** con parámetro de forma $\alpha = n/2$ y parámetro de razón $\beta = 1/2$, i.e., $\chi^2_n\equiv \text{Gamma}(n/2,1/2)$.
 
 ---
 
 ### Ejemplo {-}
 
-Visualizar la función de densidad de probabilidad de una variable aleatoria con distribución $\chi^2_\nu$, para $\nu \in\{1,2,3,4,5\}$.
+Visualizar la función de densidad de probabilidad de una variable aleatoria con distribución $\chi^2_n$, para $n \in\{1,2,3,4,5\}$.
 
 ```{r, fig.align='center'}
 # Configuración de la visualización
@@ -120,7 +121,7 @@ donde $Z_i = (X_i-\mu)/\sigma$, para $i=1,\ldots,n$.
 
 *Demostración:* Ejercicio. 
 
-Sugerencia: Halle la distribución conjunta $f(X_1,\ldots,X_n)$ y muestre que $f(X_1,\ldots,X_n) = f(\bar{X},Z_1,\ldots,Z_n)$, donde $Z_i = X_i - \bar{X}$, para $i=1,\ldots,n$.
+Sugerencia: Ver el Teorema 7.3 de Wackerly (2010).
 
 ---
 
@@ -149,7 +150,7 @@ $$
 \begin{align*}
 m_V(t) &= \textsf{E}\left(\exp{\left[t\,V\right]}\right) \\
 &= \textsf{E}\left(\exp{\left[t\,Y\right]}\,\exp{\left[t\,W\right]}\right) \\
-&= \textsf{E}\left(\exp{\left[t\,Y\right]}\right)\,\textsf{E}\left(\exp{\left[t\,W\right]}\right)\qquad\because\,\,\bar{X}\,\,\text{y}\,\,S^2\,\,\text{son independientes} \\
+&= \textsf{E}\left(\exp{\left[t\,Y\right]}\right)\,\textsf{E}\left(\exp{\left[t\,W\right]}\right)\qquad\because\,\,\bar{X}\,\,\text{y}\,\,S^2\,\,\text{son $\,$independientes} \\
 &= m_Y(t)\,m_W(t)\,.
 \end{align*}
 $$
@@ -159,7 +160,7 @@ $(1-2t)^{-n/2} = m_Y(t)\,(1-2t)^{-1/2}$, para $t < 1/2$, de donde
 $$
 m_Y(t) = (1-2t)^{-(n-1)/2}\,,
 $$
-lo que corresponde a la fgm de una variable aleatoria con distribución Chi-cuadrado con $n-1$ grado de libertad, ,i.e., $T\sim\textsf{t}_n$ . Por lo tanto, $Y\sim\chi^2_{n-1}$.
+lo que corresponde a la fgm de una variable aleatoria con distribución Chi-cuadrado con $n-1$ grado de libertad. Por lo tanto, $Y\sim\chi^2_{n-1}$.
 
 ---
 
@@ -174,7 +175,7 @@ $$
 f_T(x) = \frac{1}{\sqrt{\pi\,n}}\,\frac{\Gamma\left( \frac{n+1}{2} \right)}{\Gamma\left( \frac{n}{2} \right)}\,\left( 1 + \frac{x^2}{n} \right)^{-(n+1)/2}\,,\qquad -\infty < x < \infty\,.
 $$
 
-Dos definiciones populares para $e^x$ son
+Recuerde que dos definiciones populares para $e^x$ son
 $$
 e^x= \lim_{n\to\infty} \left(1 + \frac{x}{n}\right)^{n}
 \qquad\text{y}\qquad
@@ -281,9 +282,9 @@ legend("topright",
 
 **(Teorema.)** Si $X_1,\ldots,X_n$ y $Y_1,\ldots,Y_m$ son dos muestras aleatorias independientes de poblaciones Normales con medias $\mu_X$ y $\mu_Y$ y varianzas $\sigma^2_X$ y $\sigma^2_Y$, respectivamente, entonces  
 $$
-\frac{S^2_X/\sigma^2_X}{S^2_Y/\sigma^2_Y}\sim\textsf{F}_{n-1,m-1},,
+\frac{S^2_X/\sigma^2_X}{S^2_Y/\sigma^2_Y}\sim\textsf{F}_{n-1,m-1},
 $$
-donde $S_X$ y $S^2_Y$ son las medias muestrales de  $X_1,\ldots,X_n$ y $Y_1,\ldots,Y_m$, respectivamente.
+donde $S^2_X$ y $S^2_Y$ son las varianzas muestrales de  $X_1,\ldots,X_n$ y $Y_1,\ldots,Y_m$, respectivamente.
 
 *Demostración:* Ejercicio.
 
@@ -299,6 +300,15 @@ knitr::include_graphics("casella_berger.jpg")
 
 # Ejercicios {-}
 
+- Sea $X_1,\ldots,X_n$ una secuencia de variables aleatorias independientes con funciones generadoras de momentos $m_1(t),\ldots,m_n(t)$, respectivamente. Sea $Y = \sum_{i=1}^n a_i X_i$, donde $a_1, \ldots, a_n$ son constantes. Demuestre que la función generadora de momentos de $U$ es $m_U(t) = \prod_{i=1}^n m_i(a_i \, t)$.
+
+- Sea $X_1,\ldots,X_n$ una muestra aleatoria de variables de Bernoulli con parámetro $\theta \in (0,1)$.
+
+     a. Halle la función generadora de momentos de $X_1$.  
+     b. Halle la función generadora de momentos de $Y = X_1 + \cdots + X_n$.  
+     c. ¿Cuál es la distribución de $Y$?
+
+- Sean $X_1$ y $X_2$ variables aleatorias i.i.d. provenientes de una población Normal con media $0$ y varianza $\sigma^2$. Defina $Y_1 = X_1 + X_2$ y $Y_2 = X_1 - X_2$. Demuestre que $Y_1$ y $Y_2$ son variables aleatorias independientes tales que $Y_1, Y_2 \sim \textsf{N}(0,\,2\sigma^2)$.
 
 - Sea $X\sim\chi^2_\nu$. Demostrar que $\textsf{E}(X) = \nu$ y $\textsf{Var}(X) = 2\nu$.
 
@@ -316,15 +326,44 @@ donde $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$. Sugerencia: Demostrar que $\bar{X
 
 - Sean $X_1,\ldots,X_n$ y $Y_1,\ldots,Y_m$ son dos muestras aleatorias independientes de poblaciones Normales con medias $\mu_X$ y $\mu_Y$ y varianzas $\sigma^2_X$ y $\sigma^2_Y$, respectivamente. Demostrar que 
 $$
-\frac{\left(\bar{X} - \bar{Y}\right) - (\mu_X - \mu_Y)}{\sqrt{\sigma^2_X/n + \sigma^2_Y/m}}\sim\textsf{N}(0,1)\,,
+\frac{\big( \bar{X} - \bar{Y} \big) - (\mu_X - \mu_Y)}{\sqrt{\sigma^2_X/n + \sigma^2_Y/m}}\sim\textsf{N}(0,1)\,,
 $$
 donde $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$ y $\bar{Y} = \frac{1}{m}\sum_{i=1}^m Y_i$.
 
-- Sea $\bar{X}$ el promedio muestral de una muestra aleatoria de tamaño $n=16$ proveniente de una población normal con media $0$ y varianza $1$. Determinar el valor de $c$ tal que
+- Se toman muestras aleatorias independientes de tamaño $n_j$ de cada una de $k$ poblaciones. La población $j$ tiene distribución Normal con media $\mu_j$ y varianza $\sigma^2$, para $j=1,\ldots,k$. Sean $\bar X_j$ y $S_j^2$ la media y la varianza muestral de la muestra aleatoria $j$, respectivamente. 
+
+     a. Sea $\hat\theta = \sum_{j=1}^k c_j\,\bar X_j$ un estimador de $\theta = \sum_{j=1}^k c_j\,\mu_j$, donde $c_1,\ldots,c_k$ son constantes conocidas. Hallar la distribución muestral de $\hat\theta$.
+     b. Sea $\mathrm{SCE}=\sum_{j=1}^k (n_j-1)\,S_j^2$. Hallar la distribución muestral de $\mathrm{SCE}/\sigma^2$.
+     c. Sea $\mathrm{CME}=\mathrm{SCE}/(n-k)$, donde $n=\sum_{j=1}^k n_j$. Hallar la distribución muestral de
+     $$
+     T = \frac{\hat\theta - \theta}{\sqrt{\mathrm{CME}\,\sum_{j=1}^k \frac{c_j^2}{n_j}}}\,.
+     $$
+
+- Sea $\bar{X}$ el promedio muestral de una muestra aleatoria de tamaño $n=16$ proveniente de una población Normal con media $0$ y varianza $1$. Determinar el valor de $c$ tal que
 $$
 \textsf{Pr}\left(|\bar{X}| < c\right) = 0.5\,.
 $$
 
 - Visualizar la función de distribución acumulada de una variable aleatoria con distribución $\textsf{t}_\nu$, para $\nu\in\{1,2,3,4,5,10,25,50,100\}$. Superponer la función de distribución acumulada de una variable aleatoria con distribución $\textsf{N}(0,1)$.
+
+- Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con función de distribución acumulada $F_X(\cdot)$. Demostrar que si $Y = X_{(n)} = \max\{X_1,\ldots,X_n\}$, entonces
+$$
+F_Y(y) = \big[ F_X(y) \big]^n
+\qquad\text{y}\qquad
+f_Y(y) = n \, \big[ F_X(y) \big]^{n-1} \, f_X(y)\,.
+$$
+Sugerencia: Ver Ejemplo 3.5 de González y Jiménez (2025).
+
+- Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con función de distribución acumulada $F_X(\cdot)$. Demostrar que si $Y = X_{(1)} = \min\{X_1,\ldots,X_n\}$, entonces
+$$
+F_Y(y) = 1 - \big[ 1 - F_X(y) \big]^n
+\qquad\text{y}\qquad
+f_Y(y) = n \, \big[ 1 - F_X(y) \big]^{n-1} \, f_X(y)\,.
+$$
+Sugerencia: Ver Ejemplo 3.5 de González y Jiménez (2025).
+
+- Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con distribución Uniforme en el intervalo $(0,\theta)$, con $\theta > 0$. Hallar la función de densidad de probabilidad y la función de distribución acumulada de $X_{(n)}$.
+
+- Sea $X$ la vida útil (en horas) de un componente electrónico con densidad $f_X(x)=\frac{1}{100}\,e^{-x/100}$, para $x > 0$. Considere dos componentes de este tipo, $X_1$ y $X_2$, independientes e idénticamente distribuidos que operan en serie (el sistema falla cuando cualquiera de los dos falla). Determine la función de densidad de probabilidad de $X_{(1)}$ y calcule el valor esperado de la vida útil del sistema $\textsf{E}(X_{(1)})$.
 
 ---

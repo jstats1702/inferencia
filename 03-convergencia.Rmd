@@ -11,12 +11,12 @@ output:
     toc_float: true
     theme: cerulean
     highlight: kate
+    mathjax: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 
 # Introducción
 
@@ -269,7 +269,7 @@ $$
 \lim_{n\to\infty} F_{X_n}(x) &= \lim_{n\to\infty}\left[1- \left(1 - \frac{1}{n}\right)^{n x}\right] \\ 
 &= 1- \lim_{m\to\infty}\left(1 - \frac{x}{m}\right)^{m} \qquad\because\,\,m=nx \\
 &= 1- e^{-x}\qquad\because\,\,e^x = \lim_{m\to\infty}\left(1 + \frac{x}{m}\right)^{m} \\
-&= 1 - F_X(x)
+&= F_X(x)
 \end{align*}
 $$
 y por lo tanto $X_n\xrightarrow{\text{d}} X$. A continuación se ilustra visualmente que $X_n\xrightarrow{\text{d}} X$ por medio de las funciones de distribución acumulada:
@@ -427,9 +427,9 @@ for (n in sample_sizes) {
 
 Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias independientes tales que $X_i\sim\textsf{Bernoulli}(\pi)$, para $i=1,2,\ldots$. Demostrar que 
 $$
-\sqrt{n}\,\frac{P_n - \pi}{\sqrt{\pi(1-\pi)}} \xrightarrow{\text{d}} Z\
+\sqrt{n}\,\frac{P_n - \pi}{\sqrt{\pi(1-\pi)}} \xrightarrow{\text{d}} Z\,,
 $$
-donde $P_n = \frac{1}{n}\sum_{i=1}^n X_n$ $Z\sim\textsf{Normal}(0,1)$. Empíricamente, ¿qué tan buena es la aproximación para $n = 30$ y $\pi = 0.05$? ¿Y para $n = 30$ y $\pi = 0.50$?
+donde $P_n = \frac{1}{n}\sum_{i=1}^n X_n$ y $Z\sim\textsf{Normal}(0,1)$. Empíricamente, ¿qué tan buena es la aproximación para $n = 30$ y $\pi = 0.05$? ¿Y para $n = 30$ y $\pi = 0.50$?
 
 ---
 
@@ -479,7 +479,9 @@ Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias tales que $X_n\sim\ch
 
 ---
 
-**(Ejercicio.)** Probar que $t_n\xrightarrow{\text{d}} Z$ teniendo en cuenta que $\chi^2_n/n\xrightarrow{\text{d}} 1$.
+### Ejercicio {-}
+
+Probar que $t_n\xrightarrow{\text{d}} Z$ teniendo en cuenta que $\chi^2_n/n\xrightarrow{\text{d}} 1$.
 
 ---
 
@@ -498,7 +500,7 @@ $$
 
 ### Ejercicio {-}
 
-Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias iid con media $\mu$ y varianza $\sigma^2$ y $W_n=\exp{(\bar{X}_n)}$, donde $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i$. Demostrar que $W_n\xrightarrow{\text{d}}\textsf{Nornal}\left(e^\mu,e^{2\mu}\sigma^2/n\right)$.
+Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias i.i.d. con media $\mu$ y varianza $\sigma^2$ y $W_n=\exp{(\bar{X}_n)}$, donde $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i$. Demostrar que $W_n\xrightarrow{\text{d}}\textsf{Normal}\left(e^\mu,e^{2\mu}\sigma^2/n\right)$.
 
 ---
 
@@ -533,7 +535,7 @@ $$
 
 - Sea $X_1,\ldots,X_n$ una muestra aleatoria de una población $X$ con función de densidad $f_X(x) = x\,e^{-x} I_{(0,\infty)}(x)$. Determinar el valor de $a$ tal que $\textsf{P}(\bar{X} > a) = 0.95$. Sugerencia: Usar la función generadora de momentos.
 
-- Un dispositivo electrónico opera con base en el funcionamiento de $n$ componentes conectados en serie que funcionan de manera independiente. Si el tiempo de falla de cualquier componente se modela como una variable aleatoria con distribución Exponencial con parámetro de razón $\theta$, determinar el valor esperado y la varianza del tiempo de funcionamiento del dispositivo. Sugerencia: El tiempo de funcionamiento del dispositivo es $T=\sum_{i=1}^n X_i$, donde $X_i$ el tiempo de falla del dispositivo $i$, para $i=1,\ldots,n$.  
+- Un dispositivo electrónico opera con base en el funcionamiento de $n$ componentes conectados en serie que funcionan de manera independiente. Si el tiempo de funcionamiento de cualquier componente se modela como una variable aleatoria con distribución Exponencial con parámetro de razón $\theta$, determinar el valor esperado y la varianza del tiempo de funcionamiento del dispositivo. Sugerencia: El tiempo de funcionamiento del dispositivo es $T=\sum_{i=1}^n X_i$, donde $X_i$ el tiempo de funcionamiento del dispositivo $i$, para $i=1,\ldots,n$.  
 
 - Considerar una muestra aleatoria de 36 botellas correspondiente a la línea de llenado A. Estando el proceso de llenado bajo control, el contenido de una de botella (en mililitros) en la línea de llenado A se modela como una variable aleatoria con distribución Normal con valor esperado $\mu$ y desviación estándar 12. Se considera otra muestra aleatoria de 49 botellas de la línea de llenado B. De manera similar, estando el proceso bajo control, el contenido de una botella (en mililitros) en la línea de llenado B se modela como una variable aleatoria con distribución Normal con valor esperado $\mu$ y desviación estándar 4. Determinar la probabilidad de que los promedios muestrales difieran a lo sumo en 3 mililitros. Sugerencia: Considerar la variable aleatoria $\bar{X} - \bar{Y}$, donde $\bar{X}$ y $\bar{Y}$ son los promedios muestrales de las líneas de llenado $A$ y $B$, respectivamente.
 
@@ -543,13 +545,11 @@ $$
 
 - Una norma de control de calidad establece que se deben realizar 36 mediciones para determinar la idoneidad de medición de un equipo. El equipo debe estar calibrado de tal forma que la variabilidad en cada medición, cuantificada por medio de la desviación estándar, es de $\sigma$ unidades. Utilizar la desigualdad de Chebyshev y el teorema del límite central en forma comparativa, para establecer el valor mínimo de la probabilidad de que el promedio de las mediciones difiera a lo sumo del verdadero valor promedio en $\sigma/5$ unidades. ¿Cuál es la razón de la diferencia de los resultados?
 
-- Sean \( X, X_1, X_2, \dots \) variables aleatorias i.i.d. con distribución Bernoulli de parámetro \( \frac{1}{2} \). Mostrar que $X_n$ no converge en probabilidad a $X$.
-
 - Sea \( \{X_n\}_{n \geq 1} \) una sucesión de variables aleatorias reales que satisface $\textsf{E}(X_n) = \mu_n \xrightarrow{n \to \infty} c$ y $\textsf{Var}(X_n) = \sigma_n^2 \xrightarrow{n \to \infty} 0$. Demostrar que \( X_n \xrightarrow{\text{p}} c \). Sugerencia: Utilizar la desigualdad de Chebyshev.
 
 - Sea \( \{X_n\}_{n \geq 1} \) una sucesión de variables aleatorias i.i.d. con distribución uniforme en el intervalo \( (0,1) \). Sea $Y_n = \max\{X_1, X_2, \dots, X_n\}$. Verificar numérica y visualmente que \( Y_n \) se aproxima a 1 a medida que \( n \) crece.
 
-- Sea \( \{X_n\}_{n \geq 1} \) una sucesión de variables aleatorias i.i.d. con \( \textsf{E}(X_1) = \mu \) y \( \textsf{Var}(X_1) = \sigma^2 < \infty \). Demostrar que \( X_n \xrightarrow{L_2} \mu \).
+- Sea \( \{X_n\}_{n \geq 1} \) una sucesión de variables aleatorias i.i.d. con \( \textsf{E}(X_1) = \mu \) y \( \textsf{Var}(X_1) = \sigma^2 < \infty \). Demostrar que \( \bar{X}_n \xrightarrow{L_2} \mu \).
 
 - Sea \( \{X_n\}_{n \geq 1} \) una sucesión de variables aleatorias i.i.d. con \( X_1 \sim \textsf{Exp}(\lambda) \), y \( Y_n = \min\{X_1, \dots, X_n\} \) para todo \( n \geq 1 \). Mostrar que \( n Y_n \xrightarrow{d} Y_1 \). Sugerencia: Ver ejemplo 3.27 de González y Jiménez (2025).
 
